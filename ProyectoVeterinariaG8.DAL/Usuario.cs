@@ -40,5 +40,9 @@ namespace ProyectoVeterinariaG8.DAL
         [Required]
         [DisplayName("Fecha de creación")]
         public DateTime FechaCreacion { get; set; }
+
+        public ICollection<Mascota> Mascotas { get; set; } = new List<Mascota>();
+
+        public ICollection<Cita> Citas { get; set; } = new List<Cita>();
     }
 }

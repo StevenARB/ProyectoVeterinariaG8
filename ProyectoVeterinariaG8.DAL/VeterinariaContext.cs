@@ -6,16 +6,15 @@ namespace ProyectoVeterinariaG8.DAL
     {
         public VeterinariaContext() { }
 
-        public VeterinariaContext(DbContextOptions<VeterinariaContext>)
+        public VeterinariaContext(DbContextOptions<VeterinariaContext> options) : base(options) { }
 
-
-      protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseSqlServer();
         }
 
-        public virtual DbSet<Citas> Citas { get; set; }
+        public virtual DbSet<Cita> Citas { get; set; }
 
         public virtual DbSet<Medicamento> Medicamento { get; set;}
 

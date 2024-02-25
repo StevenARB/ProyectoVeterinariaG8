@@ -10,27 +10,27 @@ using System.Threading.Tasks;
 namespace ProyectoVeterinariaG8.DAL
 {
     [Table("Citas")]
-    public class Citas
+    public class Cita
     {
         [Key]
-        public int CitaId { get; set; }
+        public int CodigoCita { get; set; }
 
-        [ForeignKey("Mascotas")]
-        public int MascotaId { get; set; }
+        [ForeignKey("Mascota")]
+        public int CodigoMascota { get; set; }
 
         [Required]
         [DisplayName("Fecha y Hora de la Cita")]
         public DateTime FechayHora { get; set; }
 
         [Required]
-        [ForeignKey("Usuario")]
+        [ForeignKey("CodigoUsuario")]
         [DisplayName("Veterinario Principal")]
-        public int CodigoUsuario { get; set; }
+        public int CodigoVeterinario1 { get; set; }
 
         [Required]
-        [ForeignKey("Usuario")]
+        [ForeignKey("CodigoUsuario")]
         [DisplayName("Veterinario Secundario")]
-         public int CodigoUsuario2 { get; set; }
+        public int CodigoVeterinario2 { get; set; }
 
         [Required]
         [DisplayName("Descripción de la Cita")]
@@ -41,18 +41,14 @@ namespace ProyectoVeterinariaG8.DAL
         [MaxLength(200)]
         public string DiagnosticoCita { get; set; }
 
-
         [ForeignKey("Medicamento")]
         [DisplayName("Medicamentos")]
-        public int MedicamentoId { get; set; }
+        public int CodigoMedicamento { get; set; }
 
         [Required]
         [ForeignKey("EstadoCita")]
-        public int EstadoCitaId { get; set; }
-
+        public int CodigoEstadoCita { get; set; }
 
         public Usuario? Usuario { get; set; }
-
-        public ICollection<Usuario> Usuarios { get; set; } = new List<Usuario>();
     }
 }

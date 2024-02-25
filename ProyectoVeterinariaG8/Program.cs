@@ -1,7 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using ProyectoVeterinariaG8.DAL;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<VeterinariaContext>(options => options.UseSqlServer("name=ConnRSDB").LogTo(Console.WriteLine, LogLevel.Information));
 
 var app = builder.Build();
 

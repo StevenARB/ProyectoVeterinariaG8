@@ -12,7 +12,7 @@ namespace ProyectoVeterinariaG8.DAL
     public class Medicamento
     {
         [Key]
-        public int MedicamentoId { get; set; }
+        public int CodigoMedicamento { get; set; }
 
         [Required]
         public string Nombre { get; set; }
