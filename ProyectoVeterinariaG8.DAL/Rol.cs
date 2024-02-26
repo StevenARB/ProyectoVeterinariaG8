@@ -14,7 +14,7 @@ namespace ProyectoVeterinariaG8.DAL
     {
         [Key]
         [DisplayName("Código de Rol")]
-        public int CodigoRol { get; set; }
+        public int RolId { get; set; }
 
         [Required]
         [DisplayName("Descripción")]

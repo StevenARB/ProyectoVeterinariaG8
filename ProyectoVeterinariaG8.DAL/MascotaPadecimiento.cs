@@ -9,17 +9,21 @@ using System.Threading.Tasks;
 
 namespace ProyectoVeterinariaG8.DAL
 {
-    [Table("TiposMascotas")]
-    public class TipoMascota
+    [Table("MascotasPadecimientos")]
+    public class MascotaPadecimiento
     {
         [Key]
-        public int TipoId { get; set; }
+        public int PadecimientoId { get; set; }
+
+        [Required]
+        [ForeignKey("Mascota")]
+        public int MascotaId { get; set; }
 
         [Required]
         [MaxLength(300)]
-        [DisplayName("Tipo de Mascota")]
+        [DisplayName("Descripción de Padecimiento")]
         public string Descripcion { get; set; }
 
-        public ICollection<Mascota> Mascotas { get; set; } = new List<Mascota>();
+        public Mascota? Mascota { get; set; }
     }
 }

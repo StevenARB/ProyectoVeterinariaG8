@@ -13,11 +13,13 @@ namespace ProyectoVeterinariaG8.DAL
     public class RazaMascota
     {
         [Key]
-        public int CodigoRaza { get; set; }
+        public int RazaId { get; set; }
 
         [Required]
         [MaxLength(300)]
         [DisplayName("Raza de Mascota")]
         public string Descripcion { get; set; }
+
+        public ICollection<Mascota> Mascotas { get; set; } = new List<Mascota>();
     }
 }

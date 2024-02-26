@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace ProyectoVeterinariaG8.DAL
 {
-    [Table("Medicamento")]
+    [Table("Medicamentos")]
     public class Medicamento
     {
         [Key]
-        public int CodigoMedicamento { get; set; }
+        public int MedicamentoId { get; set; }
 
         [Required]
         public string Nombre { get; set; }

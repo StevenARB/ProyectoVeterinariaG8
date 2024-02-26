@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace ProyectoVeterinariaG8.DAL
 {
-    [Table("EstadoUsuario")]
+    [Table("EstadosUsuario")]
     public class EstadoUsuario
     {
         [Key]
         [DisplayName("Código de Estado")]
-        public int CodigoEstado { get; set; }
+        public int EstadoId { get; set; }
 
         [Required]
         [DisplayName("Descripción")]

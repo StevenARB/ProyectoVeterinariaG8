@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace ProyectoVeterinariaG8.DAL
 {
-    [Table("EstadoCita")]
+    [Table("EstadosCita")]
     public class EstadoCita
     {
         [Key]
-        public int CodigoEstadoCita { get; set; }
+        public int EstadoCitaId { get; set; }
 
         [Required]
         public string DescripcionCita { get; set; }

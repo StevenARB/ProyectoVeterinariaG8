@@ -14,7 +14,7 @@ namespace ProyectoVeterinariaG8.DAL
     {
         [Key]
         [DisplayName("Código de Mascota")]
-        public int CodigoMascota { get; set; }
+        public int MascotaId { get; set; }
 
         [Required]
         [MaxLength(100)]
@@ -22,11 +22,11 @@ namespace ProyectoVeterinariaG8.DAL
         
         [Required]
         [ForeignKey("TipoMascota")]
-        public string Tipo { get; set; }
+        public int TipoId { get; set; }
 
         [Required]
         [ForeignKey("RazaMascota")]
-        public string Raza { get; set; }
+        public int RazaId { get; set; }
 
         [Required]
         [MaxLength(50)]
@@ -42,18 +42,28 @@ namespace ProyectoVeterinariaG8.DAL
         [Required]
         [ForeignKey("Usuario")]
         [DisplayName("Dueño")]
-        public string Propietario { get; set; }
+        public int PropietarioId { get; set; }
 
         [Required]
         [ForeignKey("Usuario")]
-        public int CodigoUsuarioCreacion { get; set; }
+        public int UsuarioCreacionId { get; set; }
 
         [ForeignKey("Usuario")]
-        public int CodigoUsuarioModificacion { get; set; }
+        public int UsuarioModificacionId { get; set; }
 
         [Required]
         public DateTime FechaCreacion { get; set; }
 
         public DateTime FechaModificacion { get; set; }
+
+        public TipoMascota? TipoMascota { get; set; }
+
+        public RazaMascota? RazaMascota { get; set; }
+
+        public ICollection<MascotaPadecimiento> MascotaPadecimientos { get; set; } = new List<MascotaPadecimiento>();
+        
+        public ICollection<MascotaVacuna> MascotaVacunas{ get; set; } = new List<MascotaVacuna>();
+
+        public ICollection<MascotaImagen> MascotaImagenes { get; set; } = new List<MascotaImagen>();
     }
 }

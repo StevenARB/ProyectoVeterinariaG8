@@ -14,7 +14,7 @@ namespace ProyectoVeterinariaG8.DAL
     {
         [Key]
         [DisplayName("Código de usuario")]
-        public int CodigoUsuario { get; set; }
+        public int UsuarioId { get; set; }
 
         [Required]
         public string Nombre { get; set; }
@@ -28,18 +28,22 @@ namespace ProyectoVeterinariaG8.DAL
 
         [Required]
         [ForeignKey("Rol")]
-        public int CodigoRol { get; set; }
+        public int RolId { get; set; }
 
         [Required]
         public string Imagen { get; set; }
 
         [Required]
         [ForeignKey("EstadoUsuario")]
-        public int CodigoEstado { get; set; }
+        public int EstadoId { get; set; }
 
         [Required]
         [DisplayName("Fecha de creación")]
         public DateTime FechaCreacion { get; set; }
+
+        public Rol? Rol { get; set; } 
+
+        public EstadoUsuario? EstadoUsuario { get; set; }
 
         public ICollection<Mascota> Mascotas { get; set; } = new List<Mascota>();
 
