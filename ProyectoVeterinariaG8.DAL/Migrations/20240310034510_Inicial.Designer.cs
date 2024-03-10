@@ -12,7 +12,7 @@ using ProyectoVeterinariaG8.DAL;
 namespace ProyectoVeterinariaG8.DAL.Migrations
 {
     [DbContext(typeof(VeterinariaContext))]
-    [Migration("20240226071444_Inicial")]
+    [Migration("20240310034510_Inicial")]
     partial class Inicial
     {
         /// <inheritdoc />
@@ -153,19 +153,16 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
                     b.Property<int>("UsuarioCreacionId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UsuarioId")
-                        .HasColumnType("int");
-
                     b.Property<int>("UsuarioModificacionId")
                         .HasColumnType("int");
 
                     b.HasKey("MascotaId");
 
+                    b.HasIndex("PropietarioId");
+
                     b.HasIndex("RazaId");
 
                     b.HasIndex("TipoId");
-
-                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Mascotas");
                 });
@@ -389,6 +386,12 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
 
             modelBuilder.Entity("ProyectoVeterinariaG8.DAL.Mascota", b =>
                 {
+                    b.HasOne("ProyectoVeterinariaG8.DAL.Usuario", "Usuario")
+                        .WithMany("Mascotas")
+                        .HasForeignKey("PropietarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ProyectoVeterinariaG8.DAL.RazaMascota", "RazaMascota")
                         .WithMany("Mascotas")
                         .HasForeignKey("RazaId")
@@ -401,13 +404,11 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ProyectoVeterinariaG8.DAL.Usuario", null)
-                        .WithMany("Mascotas")
-                        .HasForeignKey("UsuarioId");
-
                     b.Navigation("RazaMascota");
 
                     b.Navigation("TipoMascota");
+
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("ProyectoVeterinariaG8.DAL.MascotaImagen", b =>

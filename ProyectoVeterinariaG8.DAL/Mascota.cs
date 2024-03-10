@@ -22,10 +22,12 @@ namespace ProyectoVeterinariaG8.DAL
         
         [Required]
         [ForeignKey("TipoMascota")]
+        [DisplayName("Tipo")]
         public int TipoId { get; set; }
 
         [Required]
         [ForeignKey("RazaMascota")]
+        [DisplayName("Raza")]
         public int RazaId { get; set; }
 
         [Required]
@@ -45,20 +47,22 @@ namespace ProyectoVeterinariaG8.DAL
         public int PropietarioId { get; set; }
 
         [Required]
-        [ForeignKey("Usuario")]
         public int UsuarioCreacionId { get; set; }
 
-        [ForeignKey("Usuario")]
-        public int UsuarioModificacionId { get; set; }
+        public int? UsuarioModificacionId { get; set; }
 
         [Required]
         public DateTime FechaCreacion { get; set; }
 
-        public DateTime FechaModificacion { get; set; }
+        public DateTime? FechaModificacion { get; set; }
 
+        [DisplayName("Tipo")]
         public TipoMascota? TipoMascota { get; set; }
 
+        [DisplayName("Raza")]
         public RazaMascota? RazaMascota { get; set; }
+
+        public Usuario? Usuario { get; set; }
 
         public ICollection<MascotaPadecimiento> MascotaPadecimientos { get; set; } = new List<MascotaPadecimiento>();
         

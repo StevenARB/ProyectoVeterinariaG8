@@ -135,10 +135,9 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
                     Peso = table.Column<double>(type: "float", nullable: false),
                     PropietarioId = table.Column<int>(type: "int", nullable: false),
                     UsuarioCreacionId = table.Column<int>(type: "int", nullable: false),
-                    UsuarioModificacionId = table.Column<int>(type: "int", nullable: false),
+                    UsuarioModificacionId = table.Column<int>(type: "int", nullable: true),
                     FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FechaModificacion = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UsuarioId = table.Column<int>(type: "int", nullable: true)
+                    FechaModificacion = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -156,10 +155,23 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
                         principalColumn: "TipoId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Mascotas_Usuarios_UsuarioId",
-                        column: x => x.UsuarioId,
+                        name: "FK_Mascotas_Usuarios_PropietarioId",
+                        column: x => x.PropietarioId,
                         principalTable: "Usuarios",
-                        principalColumn: "UsuarioId");
+                        principalColumn: "UsuarioId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Mascotas_Usuarios_UsuarioCreacionId",
+                        column: x => x.UsuarioCreacionId,
+                        principalTable: "Usuarios",
+                        principalColumn: "UsuarioId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Mascotas_Usuarios_UsuarioModificacionId",
+                        column: x => x.UsuarioModificacionId,
+                        principalTable: "Usuarios",
+                        principalColumn: "UsuarioId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -287,6 +299,11 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
                 column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Mascotas_PropietarioId",
+                table: "Mascotas",
+                column: "PropietarioId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Mascotas_RazaId",
                 table: "Mascotas",
                 column: "RazaId");
@@ -295,11 +312,6 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
                 name: "IX_Mascotas_TipoId",
                 table: "Mascotas",
                 column: "TipoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Mascotas_UsuarioId",
-                table: "Mascotas",
-                column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MascotasImagenes_MascotaId",
