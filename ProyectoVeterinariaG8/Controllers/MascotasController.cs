@@ -58,7 +58,7 @@ namespace ProyectoVeterinariaG8.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MascotaId,Nombre,TipoId,RazaId,Genero,Edad,Peso,PropietarioId,UsuarioCreacionId,UsuarioModificacionId")] Mascota mascota)
+        public async Task<IActionResult> Create([Bind("MascotaId,Nombre,TipoId,RazaId,Genero,Edad,Peso,UsuarioPropietarioId,UsuarioCreacionId,UsuarioModificacionId")] Mascota mascota)
         {
             if (ModelState.IsValid)
             {
@@ -85,8 +85,8 @@ namespace ProyectoVeterinariaG8.Controllers
             {
                 return NotFound();
             }
-            ViewData["RazaId"] = new SelectList(_context.RazasMascotas, "RazaId", "Descripcion", mascota.RazaId);
-            ViewData["TipoId"] = new SelectList(_context.TiposMascotas, "TipoId", "Descripcion", mascota.TipoId);
+            ViewData["RazaId"] = new SelectList(_context.RazasMascotas, "RazaId", "Descripcion");
+            ViewData["TipoId"] = new SelectList(_context.TiposMascotas, "TipoId", "Descripcion");
             return View(mascota);
         }
 
@@ -95,7 +95,7 @@ namespace ProyectoVeterinariaG8.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MascotaId,Nombre,TipoId,RazaId,Genero,Edad,Peso,PropietarioId,UsuarioCreacionId,UsuarioModificacionId,FechaCreacion")] Mascota mascota)
+        public async Task<IActionResult> Edit(int id, [Bind("MascotaId,Nombre,TipoId,RazaId,Genero,Edad,Peso,UsuarioPropietarioId,UsuarioCreacionId,UsuarioModificacionId,FechaCreacion")] Mascota mascota)
         {
             if (id != mascota.MascotaId)
             {
