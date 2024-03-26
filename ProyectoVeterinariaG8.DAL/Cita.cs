@@ -15,6 +15,7 @@ namespace ProyectoVeterinariaG8.DAL
         [Key]
         public int CitaId { get; set; }
 
+        [DisplayName("Mascota")]
         [ForeignKey("Mascota")]
         public int MascotaId { get; set; }
 
