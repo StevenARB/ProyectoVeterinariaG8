@@ -56,6 +56,12 @@ namespace ProyectoVeterinariaG8.DAL
         public ICollection<Mascota> MascotasModificadas { get; set; } = new List<Mascota>();
 
 
+        [InverseProperty(nameof(Cita.PrimerVeterinario))]
+        public ICollection<Cita> Veterinarios1 { get; set; } = new List<Cita>();
+
+        [InverseProperty(nameof(Cita.SegundoVeterinario))]
+        public ICollection<Cita> Veterinarios2 { get; set; } = new List<Cita>();
+
         public ICollection<Cita> Citas { get; set; } = new List<Cita>();
     }
 }
