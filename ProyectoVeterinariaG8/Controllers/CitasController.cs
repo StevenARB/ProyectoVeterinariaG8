@@ -61,7 +61,7 @@ namespace ProyectoVeterinariaG8.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CitaId,MascotaId,FechayHora,VeterinarioId1,VeterinarioId2,DescripcionCita,DiagnosticoCita,MedicamentoId,EstadoCitaId")] Cita cita)
+        public async Task<IActionResult> Create([Bind("CitaId,MascotaId,FechayHora,PrimerVeterinarioId,SegundoVeterinario,DescripcionCita,DiagnosticoCita,MedicamentoId,EstadoCitaId")] Cita cita)
         {
             if (ModelState.IsValid)
             {
@@ -101,7 +101,7 @@ namespace ProyectoVeterinariaG8.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CitaId,MascotaId,FechayHora,VeterinarioId1,VeterinarioId2,DescripcionCita,DiagnosticoCita,MedicamentoId,EstadoCitaId")] Cita cita)
+        public async Task<IActionResult> Edit(int id, [Bind("CitaId,MascotaId,FechayHora,PrimerVeterinarioId,SegundoVeterinario,DescripcionCita,DiagnosticoCita,MedicamentoId,EstadoCitaId")] Cita cita)
         {
             if (id != cita.CitaId)
             {
