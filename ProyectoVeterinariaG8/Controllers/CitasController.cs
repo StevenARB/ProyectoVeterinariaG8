@@ -68,6 +68,7 @@ namespace ProyectoVeterinariaG8.Controllers
         {
             if (ModelState.IsValid)
             {
+                cita.FechayHora = DateTime.Now;
                 _context.Add(cita);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
