@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ProyectoVeterinariaG8.DAL.Cita>
+﻿@using System.Security.Claims
+@model IEnumerable<ProyectoVeterinariaG8.DAL.Cita>
 
 @{
     ViewData["Title"] = "Index";
@@ -47,10 +48,10 @@
                     @Html.DisplayFor(modelItem => item.FechayHora)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PrimerVeterinarioId)
+                    @item.PrimerVeterinario.Nombre @item.PrimerVeterinario
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.SegundoVeterinarioId)
+                    @item.SegundoVeterinario.Nombre @item.SegundoVeterinario
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DescripcionCita)
@@ -68,9 +69,21 @@
                     @Html.DisplayFor(modelItem => item.EstadoCita.DescripcionCita)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.CitaId" class="btn btn-primary">Edit</a> |
+                    @{
+                        var identidad = User.Identity as ClaimsIdentity;
+                        var roles = identidad.Claims.Where(c => c.Type == ClaimTypes.Role).ToList();
+
+                        if (roles.Select(r => r.Value).Contains("Admin"))
+                        {
+
+                            <a asp-action="Edit" asp-route-id="@item.CitaId" class="btn btn-primary">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.CitaId" class="btn btn-danger">Delete</a>
+                        }
+                    }
+
                     <a asp-action="Details" asp-route-id="@item.CitaId" class="btn btn-secondary">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.CitaId" class="btn btn-danger">Delete</a>
+
+
                 </td>
             </tr>
         }

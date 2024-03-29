@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -47,6 +48,7 @@ namespace ProyectoVeterinariaG8.Controllers
         }
 
         // GET: Citas/Create
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["EstadoCitaId"] = new SelectList(_context.EstadosCita, "EstadoCitaId", "DescripcionCita");
@@ -59,6 +61,7 @@ namespace ProyectoVeterinariaG8.Controllers
         // POST: Citas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CitaId,MascotaId,FechayHora,PrimerVeterinarioId,SegundoVeterinario,DescripcionCita,DiagnosticoCita,MedicamentoId,EstadoCitaId")] Cita cita)
@@ -77,6 +80,7 @@ namespace ProyectoVeterinariaG8.Controllers
         }
 
         // GET: Citas/Edit/5
+        [Authorize(Roles = "Admin, Veterinario")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Citas == null)
@@ -99,6 +103,7 @@ namespace ProyectoVeterinariaG8.Controllers
         // POST: Citas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin, Veterinario")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("CitaId,MascotaId,FechayHora,PrimerVeterinarioId,SegundoVeterinario,DescripcionCita,DiagnosticoCita,MedicamentoId,EstadoCitaId")] Cita cita)
