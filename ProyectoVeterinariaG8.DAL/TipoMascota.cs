@@ -13,6 +13,7 @@ namespace ProyectoVeterinariaG8.DAL
     public class TipoMascota
     {
         [Key]
+        [DisplayName("Código Tipo de Mascota")]
         public int TipoId { get; set; }
 
         [Required]
