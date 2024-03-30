@@ -16,9 +16,17 @@ namespace ProyectoVeterinariaG8.DAL
         public int RazaId { get; set; }
 
         [Required]
+        [ForeignKey("TipoMascota")]
+        [DisplayName("Tipo de Mascota")]
+        public int TipoId { get; set; }
+
+        [Required]
         [MaxLength(300)]
         [DisplayName("Raza de Mascota")]
         public string Descripcion { get; set; }
+
+        [DisplayName("Tipo de Mascota")]
+        public TipoMascota? TipoMascota { get; set; }
 
         public ICollection<Mascota> Mascotas { get; set; } = new List<Mascota>();
     }

@@ -16,6 +16,12 @@
                 @Html.DisplayNameFor(model => model.Nombre)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.TipoMascota)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RazaMascota)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Genero)
             </th>
             <th>
@@ -25,25 +31,7 @@
                 @Html.DisplayNameFor(model => model.Peso)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PropietarioId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UsuarioCreacionId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UsuarioModificacionId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaCreacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaModificacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TipoMascota)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RazaMascota)
+                @Html.DisplayNameFor(model => model.UsuarioPropietarioId)
             </th>
             <th></th>
         </tr>
@@ -55,6 +43,12 @@
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.TipoMascota.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RazaMascota.Descripcion)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Genero)
             </td>
             <td>
@@ -64,25 +58,7 @@
                 @Html.DisplayFor(modelItem => item.Peso)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PropietarioId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UsuarioCreacionId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UsuarioModificacionId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaCreacion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaModificacion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoMascota.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RazaMascota.Descripcion)
+                @Html.DisplayFor(modelItem => item.UsuarioPropietarioId)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.MascotaId">Edit</a> |

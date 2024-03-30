@@ -30,7 +30,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="Genero" class="control-label"></label>
-                <input asp-for="Genero" class="form-control" />
+                <select asp-for="Genero" class="form-control">
+                    <option value="Macho">Macho</option>
+                    <option value="Hembra">Hembra</option>
+                </select>
                 <span asp-validation-for="Genero" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -44,9 +47,9 @@
                 <span asp-validation-for="Peso" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PropietarioId" class="control-label"></label>
-                <input asp-for="PropietarioId" class="form-control" />
-                <span asp-validation-for="PropietarioId" class="text-danger"></span>
+                <label asp-for="UsuarioPropietarioId" class="control-label"></label>
+                <input asp-for="UsuarioPropietarioId" class="form-control" />
+                <span asp-validation-for="UsuarioPropietarioId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="UsuarioCreacionId" class="control-label"></label>

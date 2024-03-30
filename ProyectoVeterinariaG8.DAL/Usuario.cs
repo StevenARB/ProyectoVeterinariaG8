@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ProyectoVeterinariaG8.DAL
@@ -45,7 +46,21 @@ namespace ProyectoVeterinariaG8.DAL
 
         public EstadoUsuario? EstadoUsuario { get; set; }
 
+        [InverseProperty(nameof(Mascota.UsuarioPropietario))]
         public ICollection<Mascota> Mascotas { get; set; } = new List<Mascota>();
+
+        [InverseProperty(nameof(Mascota.UsuarioCreacion))]
+        public ICollection<Mascota> MascotasCreadas { get; set; } = new List<Mascota>();
+
+        [InverseProperty(nameof(Mascota.UsuarioModificacion))]
+        public ICollection<Mascota> MascotasModificadas { get; set; } = new List<Mascota>();
+
+
+        [InverseProperty(nameof(Cita.PrimerVeterinario))]
+        public ICollection<Cita> Veterinarios1 { get; set; } = new List<Cita>();
+
+        [InverseProperty(nameof(Cita.SegundoVeterinario))]
+        public ICollection<Cita> Veterinarios2 { get; set; } = new List<Cita>();
 
         public ICollection<Cita> Citas { get; set; } = new List<Cita>();
     }

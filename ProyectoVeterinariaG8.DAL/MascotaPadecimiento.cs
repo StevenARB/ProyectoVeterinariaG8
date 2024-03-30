@@ -17,13 +17,15 @@ namespace ProyectoVeterinariaG8.DAL
 
         [Required]
         [ForeignKey("Mascota")]
+        [DisplayName("Código de Mascota")]
         public int MascotaId { get; set; }
 
         [Required]
         [MaxLength(300)]
-        [DisplayName("Descripción de Padecimiento")]
+        [DisplayName("Padecimiento")]
         public string Descripcion { get; set; }
 
+        [DisplayName("Código de Mascota")]
         public Mascota? Mascota { get; set; }
     }
 }

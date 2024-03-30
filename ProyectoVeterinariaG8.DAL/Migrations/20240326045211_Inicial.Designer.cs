@@ -12,7 +12,7 @@ using ProyectoVeterinariaG8.DAL;
 namespace ProyectoVeterinariaG8.DAL.Migrations
 {
     [DbContext(typeof(VeterinariaContext))]
-    [Migration("20240310034510_Inicial")]
+    [Migration("20240326045211_Inicial")]
     partial class Inicial
     {
         /// <inheritdoc />
@@ -125,7 +125,7 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
                     b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("FechaModificacion")
+                    b.Property<DateTime?>("FechaModificacion")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Genero")
@@ -141,9 +141,6 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
                     b.Property<double>("Peso")
                         .HasColumnType("float");
 
-                    b.Property<int>("PropietarioId")
-                        .HasColumnType("int");
-
                     b.Property<int>("RazaId")
                         .HasColumnType("int");
 
@@ -153,16 +150,23 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
                     b.Property<int>("UsuarioCreacionId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UsuarioModificacionId")
+                    b.Property<int?>("UsuarioModificacionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsuarioPropietarioId")
                         .HasColumnType("int");
 
                     b.HasKey("MascotaId");
 
-                    b.HasIndex("PropietarioId");
-
                     b.HasIndex("RazaId");
 
                     b.HasIndex("TipoId");
+
+                    b.HasIndex("UsuarioCreacionId");
+
+                    b.HasIndex("UsuarioModificacionId");
+
+                    b.HasIndex("UsuarioPropietarioId");
 
                     b.ToTable("Mascotas");
                 });
@@ -386,12 +390,6 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
 
             modelBuilder.Entity("ProyectoVeterinariaG8.DAL.Mascota", b =>
                 {
-                    b.HasOne("ProyectoVeterinariaG8.DAL.Usuario", "Usuario")
-                        .WithMany("Mascotas")
-                        .HasForeignKey("PropietarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("ProyectoVeterinariaG8.DAL.RazaMascota", "RazaMascota")
                         .WithMany("Mascotas")
                         .HasForeignKey("RazaId")
@@ -404,11 +402,31 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ProyectoVeterinariaG8.DAL.Usuario", "UsuarioCreacion")
+                        .WithMany("MascotasCreadas")
+                        .HasForeignKey("UsuarioCreacionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProyectoVeterinariaG8.DAL.Usuario", "UsuarioModificacion")
+                        .WithMany("MascotasModificadas")
+                        .HasForeignKey("UsuarioModificacionId");
+
+                    b.HasOne("ProyectoVeterinariaG8.DAL.Usuario", "UsuarioPropietario")
+                        .WithMany("Mascotas")
+                        .HasForeignKey("UsuarioPropietarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("RazaMascota");
 
                     b.Navigation("TipoMascota");
 
-                    b.Navigation("Usuario");
+                    b.Navigation("UsuarioCreacion");
+
+                    b.Navigation("UsuarioModificacion");
+
+                    b.Navigation("UsuarioPropietario");
                 });
 
             modelBuilder.Entity("ProyectoVeterinariaG8.DAL.MascotaImagen", b =>
@@ -487,6 +505,10 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
                     b.Navigation("Citas");
 
                     b.Navigation("Mascotas");
+
+                    b.Navigation("MascotasCreadas");
+
+                    b.Navigation("MascotasModificadas");
                 });
 #pragma warning restore 612, 618
         }
