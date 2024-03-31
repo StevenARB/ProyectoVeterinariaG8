@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProyectoVeterinariaG8.DAL;
 
@@ -11,9 +12,11 @@ using ProyectoVeterinariaG8.DAL;
 namespace ProyectoVeterinariaG8.DAL.Migrations
 {
     [DbContext(typeof(VeterinariaContext))]
-    partial class VeterinariaContextModelSnapshot : ModelSnapshot
+    [Migration("20240331000436_CitasVeterinarios")]
+    partial class CitasVeterinarios
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,6 +60,9 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
                     b.Property<int>("SegundoVeterinarioId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("UsuarioId")
+                        .HasColumnType("int");
+
                     b.HasKey("CitaId");
 
                     b.HasIndex("EstadoCitaId");
@@ -68,6 +74,8 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
                     b.HasIndex("PrimerVeterinarioId");
 
                     b.HasIndex("SegundoVeterinarioId");
+
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Citas");
                 });
@@ -364,7 +372,7 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
                         .IsRequired();
 
                     b.HasOne("ProyectoVeterinariaG8.DAL.Mascota", "Mascota")
-                        .WithMany("Citas")
+                        .WithMany()
                         .HasForeignKey("MascotaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -387,6 +395,10 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ProyectoVeterinariaG8.DAL.Usuario", "Usuario")
+                        .WithMany("Citas")
+                        .HasForeignKey("UsuarioId");
+
                     b.Navigation("EstadoCita");
 
                     b.Navigation("Mascota");
@@ -396,6 +408,8 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
                     b.Navigation("PrimerVeterinario");
 
                     b.Navigation("SegundoVeterinario");
+
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("ProyectoVeterinariaG8.DAL.Mascota", b =>
@@ -504,8 +518,6 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
 
             modelBuilder.Entity("ProyectoVeterinariaG8.DAL.Mascota", b =>
                 {
-                    b.Navigation("Citas");
-
                     b.Navigation("MascotaImagenes");
 
                     b.Navigation("MascotaPadecimientos");
@@ -527,6 +539,8 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
 
             modelBuilder.Entity("ProyectoVeterinariaG8.DAL.Usuario", b =>
                 {
+                    b.Navigation("Citas");
+
                     b.Navigation("Mascotas");
 
                     b.Navigation("MascotasCreadas");

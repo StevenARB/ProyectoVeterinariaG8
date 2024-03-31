@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProyectoVeterinariaG8.DAL;
 
@@ -11,9 +12,11 @@ using ProyectoVeterinariaG8.DAL;
 namespace ProyectoVeterinariaG8.DAL.Migrations
 {
     [DbContext(typeof(VeterinariaContext))]
-    partial class VeterinariaContextModelSnapshot : ModelSnapshot
+    [Migration("20240331004330_CitasUsuarioNavigation")]
+    partial class CitasUsuarioNavigation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

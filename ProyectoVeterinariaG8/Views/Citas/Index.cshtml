@@ -17,10 +17,10 @@
                 @Html.DisplayNameFor(model => model.FechayHora)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PrimerVeterinarioId)
+                @Html.DisplayNameFor(model => model.PrimerVeterinario)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SegundoVeterinarioId)
+                @Html.DisplayNameFor(model => model.SegundoVeterinario)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DescripcionCita)
@@ -48,10 +48,10 @@
                     @Html.DisplayFor(modelItem => item.FechayHora)
                 </td>
                 <td>
-                    @item.PrimerVeterinario.Nombre @item.PrimerVeterinario
+                    @Html.DisplayFor(modelItem => item.PrimerVeterinario.Nombre)
                 </td>
                 <td>
-                    @item.SegundoVeterinario.Nombre @item.SegundoVeterinario
+                    @Html.DisplayFor(modelItem => item.SegundoVeterinario.Nombre)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DescripcionCita)
