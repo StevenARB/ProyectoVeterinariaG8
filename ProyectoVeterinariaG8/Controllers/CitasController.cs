@@ -22,7 +22,7 @@ namespace ProyectoVeterinariaG8.Controllers
         // GET: Citas
         public async Task<IActionResult> Index()
         {
-            var veterinariaContext = _context.Citas.Include(c => c.EstadoCita).Include(c => c.Mascota).Include(c => c.Medicamento);
+            var veterinariaContext = _context.Citas.Include(c => c.EstadoCita).Include(c => c.Mascota).Include(c => c.Medicamento).Include(c => c.PrimerVeterinario).Include(c => c.SegundoVeterinario);
             return View(await veterinariaContext.ToListAsync());
         }
 
@@ -38,6 +38,8 @@ namespace ProyectoVeterinariaG8.Controllers
                 .Include(c => c.EstadoCita)
                 .Include(c => c.Mascota)
                 .Include(c => c.Medicamento)
+                .Include(c => c.PrimerVeterinario)
+                .Include(c => c.SegundoVeterinario)
                 .FirstOrDefaultAsync(m => m.CitaId == id);
             if (cita == null)
             {
