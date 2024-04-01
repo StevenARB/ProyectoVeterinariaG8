@@ -76,11 +76,11 @@
                         if (roles.Select(r => r.Value).Contains("Admin"))
                         {
 
-                            <a asp-action="Edit" asp-route-id="@item.CitaId" class="btn btn-primary">Edit</a>
+                           
                             <a asp-action="Delete" asp-route-id="@item.CitaId" class="btn btn-danger">Delete</a>
                         }
                     }
-
+                    <a asp-action="Edit" asp-route-id="@item.CitaId" class="btn btn-primary">Edit</a>
                     <a asp-action="Details" asp-route-id="@item.CitaId" class="btn btn-secondary">Details</a> |
 
 

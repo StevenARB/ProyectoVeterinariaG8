@@ -79,6 +79,38 @@ namespace ProyectoVeterinariaG8.Controllers
                 ModelState.AddModelError("FechayHora", "La hora seleccionada debe estar entre las 7am y las 6pm");
             }
 
+            //Restriccion Veterinario 1 cita fecha
+            if (_context.Citas.Any(c => c.PrimerVeterinarioId == cita.PrimerVeterinarioId && c.FechayHora == cita.FechayHora))
+            {
+                ModelState.AddModelError("PrimerVeterinarioId", "El veterinario ya tiene una cita asignada en la misma fecha y hora");
+            }
+
+
+            //Restriccion Veterinario 2 cita fecha
+            if (_context.Citas.Any(c => c.SegundoVeterinarioId == cita.SegundoVeterinarioId && c.FechayHora == cita.FechayHora))
+            {
+                ModelState.AddModelError("SegundoVeterinarioId", "El veterinario ya tiene una cita asignada en la misma fecha y hora");
+            }
+
+            //Verificar si el veterinario 1 esta activo
+            var primerVeterinario = await _context.Usuarios.FindAsync(cita.PrimerVeterinarioId);
+            if (primerVeterinario == null || primerVeterinario.EstadoId == 2)
+            {
+                ModelState.AddModelError("PrimerVeterinarioId", "El primer veterinario seleccionado está inactivo");
+            }
+
+            //Verificar si el veterinario 2 esta activo
+            var segundoVeterinario = await _context.Usuarios.FindAsync(cita.SegundoVeterinarioId);
+            if (segundoVeterinario == null || segundoVeterinario.EstadoId == 2)
+            {
+                ModelState.AddModelError("SegundoVeterinarioId", "El Segundo veterinario seleccionado está inactivo");
+            }
+
+            //Verificar que el veterinario 1 y veterinario 2 son iguales
+            if (cita.PrimerVeterinarioId == cita.SegundoVeterinarioId)
+            {
+                ModelState.AddModelError("SegundoVeterinarioId", "El segundo veterinario debe ser diferente al primer veterinario");
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(cita);
@@ -87,6 +119,8 @@ namespace ProyectoVeterinariaG8.Controllers
             }
             ViewData["EstadoCitaId"] = new SelectList(_context.EstadosCita, "EstadoCitaId", "DescripcionCita", cita.EstadoCitaId);
             ViewData["MascotaId"] = new SelectList(_context.Mascotas, "MascotaId", "Nombre", cita.MascotaId);
+            ViewData["PrimerVeterinarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Nombre");
+            ViewData["SegundoVeterinarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Nombre");
             ViewData["PrimerVeterinario"] = new SelectList(_context.Usuarios, "UsuarioId", "Nombre", cita.PrimerVeterinarioId);
             ViewData["SegundoVeterinario"] = new SelectList(_context.Usuarios, "UsuarioId", "Nombre", cita.SegundoVeterinarioId);
             ViewData["MedicamentoId"] = new SelectList(_context.Medicamentos, "MedicamentoId", "Nombre", cita.MedicamentoId);
