@@ -67,10 +67,12 @@ namespace ProyectoVeterinariaG8.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CitaId,MascotaId,FechayHora,PrimerVeterinarioId,SegundoVeterinarioId,DescripcionCita,DiagnosticoCita,MedicamentoId,EstadoCitaId")] Cita cita)
         {
+            //Validar que no se aparte una cita Sabado o Domingo
             if (cita.FechayHora.DayOfWeek == DayOfWeek.Sunday)
             {
                 ModelState.AddModelError("FechayHora", "La fecha seleccionada no puede ser");
             }
+            //Validar que no se aparte una cita entre las 7am y las 6pm
             int horaSeleccionada = cita.FechayHora.Hour;
             if (horaSeleccionada < 7 || horaSeleccionada >= 18)
             {
