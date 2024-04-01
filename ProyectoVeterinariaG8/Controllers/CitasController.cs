@@ -93,14 +93,14 @@ namespace ProyectoVeterinariaG8.Controllers
 
             //Verificar si el veterinario 1 esta activo
             var primerVeterinario = await _context.Usuarios.FindAsync(cita.PrimerVeterinarioId);
-            if (primerVeterinario == null || primerVeterinario.EstadoId != 1)
+            if (primerVeterinario == null || primerVeterinario.EstadoId == 2)
             {
                 ModelState.AddModelError("PrimerVeterinarioId", "El primer veterinario seleccionado está inactivo");
             }
 
             //Verificar si el veterinario 2 esta activo
             var segundoVeterinario = await _context.Usuarios.FindAsync(cita.SegundoVeterinarioId);
-            if (segundoVeterinario == null || segundoVeterinario.EstadoId != 1)
+            if (segundoVeterinario == null || segundoVeterinario.EstadoId == 2)
             {
                 ModelState.AddModelError("SegundoVeterinarioId", "El Segundo veterinario seleccionado está inactivo");
             }
@@ -118,6 +118,8 @@ namespace ProyectoVeterinariaG8.Controllers
             }
             ViewData["EstadoCitaId"] = new SelectList(_context.EstadosCita, "EstadoCitaId", "DescripcionCita", cita.EstadoCitaId);
             ViewData["MascotaId"] = new SelectList(_context.Mascotas, "MascotaId", "Nombre", cita.MascotaId);
+            ViewData["PrimerVeterinarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Nombre");
+            ViewData["SegundoVeterinarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Nombre");
             ViewData["PrimerVeterinario"] = new SelectList(_context.Usuarios, "UsuarioId", "Nombre", cita.PrimerVeterinarioId);
             ViewData["SegundoVeterinario"] = new SelectList(_context.Usuarios, "UsuarioId", "Nombre", cita.SegundoVeterinarioId);
             ViewData["MedicamentoId"] = new SelectList(_context.Medicamentos, "MedicamentoId", "Nombre", cita.MedicamentoId);
