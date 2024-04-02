@@ -79,5 +79,7 @@ namespace ProyectoVeterinariaG8.DAL
         public ICollection<MascotaVacuna> MascotaVacunas{ get; set; } = new List<MascotaVacuna>();
 
         public ICollection<MascotaImagen> MascotaImagenes { get; set; } = new List<MascotaImagen>();
+
+        public ICollection<Cita> Citas { get; set; } = new List<Cita>();
     }
 }

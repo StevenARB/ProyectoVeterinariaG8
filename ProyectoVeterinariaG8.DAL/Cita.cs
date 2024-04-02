@@ -52,8 +52,6 @@ namespace ProyectoVeterinariaG8.DAL
 
         public Mascota? Mascota { get; set; }
 
-        public Usuario? Usuario { get; set; }
-
         public Usuario? PrimerVeterinario { get; set; }
 
         public Usuario? SegundoVeterinario { get; set; }

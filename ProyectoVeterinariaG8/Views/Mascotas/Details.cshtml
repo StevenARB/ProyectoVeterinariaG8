@@ -10,6 +10,35 @@
     <h4>Mascota</h4>
     <hr />
     <dl class="row">
+        <dt class="col-sm-12">
+            Imagenes de la Mascota
+        </dt>
+        <dd class="col-sm-12 my-3">
+            <div style="width: 25rem">
+                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        @{
+                            bool active = true;
+                        }
+                        @foreach (var item in Model.MascotaImagenes)
+                        {
+                            <div class="@(active ? "carousel-item active" : "carousel-item")">
+                                <img src="data:image/jpeg;base64,@(Convert.ToBase64String(item.Imagen))" class="d-block w-100" alt="Imagen de @Html.DisplayFor(model => model.Nombre)" />
+                            </div>
+                            active = false;
+                        }
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </dd>
         <dt class = "col-sm-3">
             @Html.DisplayNameFor(model => model.Nombre)
         </dt>

@@ -61,7 +61,5 @@ namespace ProyectoVeterinariaG8.DAL
 
         [InverseProperty(nameof(Cita.SegundoVeterinario))]
         public ICollection<Cita> Veterinarios2 { get; set; } = new List<Cita>();
-
-        public ICollection<Cita> Citas { get; set; } = new List<Cita>();
     }
 }

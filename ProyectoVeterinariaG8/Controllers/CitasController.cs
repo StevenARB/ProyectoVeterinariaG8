@@ -22,7 +22,7 @@ namespace ProyectoVeterinariaG8.Controllers
         // GET: Citas
         public async Task<IActionResult> Index()
         {
-            var veterinariaContext = _context.Citas.Include(c => c.EstadoCita).Include(c => c.Mascota).Include(c => c.Medicamento);
+            var veterinariaContext = _context.Citas.Include(c => c.EstadoCita).Include(c => c.Mascota).Include(c => c.Medicamento).Include(c => c.PrimerVeterinario).Include(c => c.SegundoVeterinario);
             return View(await veterinariaContext.ToListAsync());
         }
 
@@ -38,6 +38,8 @@ namespace ProyectoVeterinariaG8.Controllers
                 .Include(c => c.EstadoCita)
                 .Include(c => c.Mascota)
                 .Include(c => c.Medicamento)
+                .Include(c => c.PrimerVeterinario)
+                .Include(c => c.SegundoVeterinario)
                 .FirstOrDefaultAsync(m => m.CitaId == id);
             if (cita == null)
             {
@@ -48,12 +50,12 @@ namespace ProyectoVeterinariaG8.Controllers
         }
 
         // GET: Citas/Create
-        [Authorize]
         public IActionResult Create()
         {
             ViewData["EstadoCitaId"] = new SelectList(_context.EstadosCita, "EstadoCitaId", "DescripcionCita");
             ViewData["MascotaId"] = new SelectList(_context.Mascotas, "MascotaId", "Nombre");
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Nombre");
+            ViewData["PrimerVeterinarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Nombre");
+            ViewData["SegundoVeterinarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Nombre");
             ViewData["MedicamentoId"] = new SelectList(_context.Medicamentos, "MedicamentoId", "Nombre");
             return View();
         }
@@ -61,27 +63,71 @@ namespace ProyectoVeterinariaG8.Controllers
         // POST: Citas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CitaId,MascotaId,FechayHora,PrimerVeterinarioId,SegundoVeterinario,DescripcionCita,DiagnosticoCita,MedicamentoId,EstadoCitaId")] Cita cita)
+        public async Task<IActionResult> Create([Bind("CitaId,MascotaId,FechayHora,PrimerVeterinarioId,SegundoVeterinarioId,DescripcionCita,DiagnosticoCita,MedicamentoId,EstadoCitaId")] Cita cita)
         {
+            //Validar que no se aparte una cita Sabado o Domingo
+            if (cita.FechayHora.DayOfWeek == DayOfWeek.Sunday)
+            {
+                ModelState.AddModelError("FechayHora", "La fecha seleccionada no puede ser");
+            }
+            //Validar que no se aparte una cita entre las 7am y las 6pm
+            int horaSeleccionada = cita.FechayHora.Hour;
+            if (horaSeleccionada < 7 || horaSeleccionada >= 18)
+            {
+                ModelState.AddModelError("FechayHora", "La hora seleccionada debe estar entre las 7am y las 6pm");
+            }
+
+            //Restriccion Veterinario 1 cita fecha
+            if (_context.Citas.Any(c => c.PrimerVeterinarioId == cita.PrimerVeterinarioId && c.FechayHora == cita.FechayHora))
+            {
+                ModelState.AddModelError("PrimerVeterinarioId", "El veterinario ya tiene una cita asignada en la misma fecha y hora");
+            }
+
+
+            //Restriccion Veterinario 2 cita fecha
+            if (_context.Citas.Any(c => c.SegundoVeterinarioId == cita.SegundoVeterinarioId && c.FechayHora == cita.FechayHora))
+            {
+                ModelState.AddModelError("SegundoVeterinarioId", "El veterinario ya tiene una cita asignada en la misma fecha y hora");
+            }
+
+            //Verificar si el veterinario 1 esta activo
+            var primerVeterinario = await _context.Usuarios.FindAsync(cita.PrimerVeterinarioId);
+            if (primerVeterinario == null || primerVeterinario.EstadoId == 2)
+            {
+                ModelState.AddModelError("PrimerVeterinarioId", "El primer veterinario seleccionado está inactivo");
+            }
+
+            //Verificar si el veterinario 2 esta activo
+            var segundoVeterinario = await _context.Usuarios.FindAsync(cita.SegundoVeterinarioId);
+            if (segundoVeterinario == null || segundoVeterinario.EstadoId == 2)
+            {
+                ModelState.AddModelError("SegundoVeterinarioId", "El Segundo veterinario seleccionado está inactivo");
+            }
+
+            //Verificar que el veterinario 1 y veterinario 2 son iguales
+            if (cita.PrimerVeterinarioId == cita.SegundoVeterinarioId)
+            {
+                ModelState.AddModelError("SegundoVeterinarioId", "El segundo veterinario debe ser diferente al primer veterinario");
+            }
             if (ModelState.IsValid)
             {
-                cita.FechayHora = DateTime.Now;
                 _context.Add(cita);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EstadoCitaId"] = new SelectList(_context.EstadosCita, "EstadoCitaId", "DescripcionCita", cita.EstadoCitaId);
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Nombre", cita.MascotaId);
             ViewData["MascotaId"] = new SelectList(_context.Mascotas, "MascotaId", "Nombre", cita.MascotaId);
+            ViewData["PrimerVeterinarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Nombre");
+            ViewData["SegundoVeterinarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Nombre");
+            ViewData["PrimerVeterinario"] = new SelectList(_context.Usuarios, "UsuarioId", "Nombre", cita.PrimerVeterinarioId);
+            ViewData["SegundoVeterinario"] = new SelectList(_context.Usuarios, "UsuarioId", "Nombre", cita.SegundoVeterinarioId);
             ViewData["MedicamentoId"] = new SelectList(_context.Medicamentos, "MedicamentoId", "Nombre", cita.MedicamentoId);
             return View(cita);
         }
 
         // GET: Citas/Edit/5
-        [Authorize(Roles = "Admin, Veterinario")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Citas == null)
@@ -96,7 +142,8 @@ namespace ProyectoVeterinariaG8.Controllers
             }
             ViewData["EstadoCitaId"] = new SelectList(_context.EstadosCita, "EstadoCitaId", "DescripcionCita", cita.EstadoCitaId);
             ViewData["MascotaId"] = new SelectList(_context.Mascotas, "MascotaId", "Nombre", cita.MascotaId);
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Nombre", cita.MascotaId);
+            ViewData["PrimerVeterinario"] = new SelectList(_context.Usuarios, "UsuarioId", "Nombre", cita.PrimerVeterinarioId);
+            ViewData["SegundoVeterinario"] = new SelectList(_context.Usuarios, "UsuarioId", "Nombre", cita.SegundoVeterinarioId);
             ViewData["MedicamentoId"] = new SelectList(_context.Medicamentos, "MedicamentoId", "Nombre", cita.MedicamentoId);
             return View(cita);
         }
@@ -104,7 +151,6 @@ namespace ProyectoVeterinariaG8.Controllers
         // POST: Citas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Admin, Veterinario")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("CitaId,MascotaId,FechayHora,PrimerVeterinarioId,SegundoVeterinario,DescripcionCita,DiagnosticoCita,MedicamentoId,EstadoCitaId")] Cita cita)
@@ -136,7 +182,8 @@ namespace ProyectoVeterinariaG8.Controllers
             }
             ViewData["EstadoCitaId"] = new SelectList(_context.EstadosCita, "EstadoCitaId", "DescripcionCita", cita.EstadoCitaId);
             ViewData["MascotaId"] = new SelectList(_context.Mascotas, "MascotaId", "Nombre", cita.MascotaId);
-            ViewData["UsuarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Nombre", cita.MascotaId);
+            ViewData["PrimerVeterinario"] = new SelectList(_context.Usuarios, "UsuarioId", "Nombre", cita.PrimerVeterinarioId);
+            ViewData["SegundoVeterinario"] = new SelectList(_context.Usuarios, "UsuarioId", "Nombre", cita.SegundoVeterinarioId);
             ViewData["MedicamentoId"] = new SelectList(_context.Medicamentos, "MedicamentoId", "Nombre", cita.MedicamentoId);
             return View(cita);
         }

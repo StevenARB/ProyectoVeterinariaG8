@@ -28,7 +28,7 @@ namespace ProyectoVeterinariaG8.Controllers
         // GET: Mascotas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Mascotas == null)
+            if (id == null || _context.Mascotas == null || _context.MascotasImagenes == null)
             {
                 return NotFound();
             }
@@ -36,7 +36,9 @@ namespace ProyectoVeterinariaG8.Controllers
             var mascota = await _context.Mascotas
                 .Include(m => m.RazaMascota)
                 .Include(m => m.TipoMascota)
+                .Include(m => m.MascotaImagenes)
                 .FirstOrDefaultAsync(m => m.MascotaId == id);
+
             if (mascota == null)
             {
                 return NotFound();
@@ -58,12 +60,32 @@ namespace ProyectoVeterinariaG8.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MascotaId,Nombre,TipoId,RazaId,Genero,Edad,Peso,UsuarioPropietarioId,UsuarioCreacionId,UsuarioModificacionId")] Mascota mascota)
+        public async Task<IActionResult> Create([Bind("MascotaId,Nombre,TipoId,RazaId,Genero,Edad,Peso,UsuarioPropietarioId,UsuarioCreacionId,UsuarioModificacionId")] Mascota mascota, IFormFile imagen)
         {
             if (ModelState.IsValid)
             {
                 mascota.FechaCreacion = DateTime.Now;
+                byte[]? imagenVariable = null;
+
+                if (imagen != null && imagen.Length > 0)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await imagen.CopyToAsync(memoryStream);
+                        imagenVariable = memoryStream.ToArray();
+                    }
+                }
+
                 _context.Add(mascota);
+                await _context.SaveChangesAsync();
+
+                MascotaImagen mascotaImagen = new MascotaImagen
+                {
+                    MascotaId = mascota.MascotaId,
+                    Imagen = imagenVariable
+                };
+
+                _context.Add(mascotaImagen);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

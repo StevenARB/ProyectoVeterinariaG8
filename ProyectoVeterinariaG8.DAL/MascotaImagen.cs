@@ -22,7 +22,7 @@ namespace ProyectoVeterinariaG8.DAL
 
         [Required]
         [DisplayName("Imagen de la Mascota")]
-        public string Imagen { get; set; }
+        public byte[] Imagen { get; set; }
 
         public Mascota? Mascota { get; set; }
     }
