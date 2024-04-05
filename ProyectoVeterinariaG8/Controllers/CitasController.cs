@@ -182,6 +182,8 @@ namespace ProyectoVeterinariaG8.Controllers
             }
             ViewData["EstadoCitaId"] = new SelectList(_context.EstadosCita, "EstadoCitaId", "DescripcionCita", cita.EstadoCitaId);
             ViewData["MascotaId"] = new SelectList(_context.Mascotas, "MascotaId", "Nombre", cita.MascotaId);
+            ViewData["PrimerVeterinarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Nombre");
+            ViewData["SegundoVeterinarioId"] = new SelectList(_context.Usuarios, "UsuarioId", "Nombre");
             ViewData["PrimerVeterinario"] = new SelectList(_context.Usuarios, "UsuarioId", "Nombre", cita.PrimerVeterinarioId);
             ViewData["SegundoVeterinario"] = new SelectList(_context.Usuarios, "UsuarioId", "Nombre", cita.SegundoVeterinarioId);
             ViewData["MedicamentoId"] = new SelectList(_context.Medicamentos, "MedicamentoId", "Nombre", cita.MedicamentoId);
