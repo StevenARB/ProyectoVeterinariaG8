@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<VeterinariaContext>(options => options.UseSqlServer("name=ConnRSDB").LogTo(Console.WriteLine, LogLevel.Information));
+builder.Services.AddDbContext<VeterinariaContext>(options => options.UseSqlServer("name=ConnDB").LogTo(Console.WriteLine, LogLevel.Information));
 
 var app = builder.Build();
 
