@@ -3,9 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34518.117
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProyectoVeterinariaG8", "ProyectoVeterinariaG8\ProyectoVeterinariaG8.csproj", "{EBE97353-D0BD-4154-8A04-D1E43853B611}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProyectoVeterinariaG8", "ProyectoVeterinariaG8\ProyectoVeterinariaG8.csproj", "{EBE97353-D0BD-4154-8A04-D1E43853B611}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProyectoVeterinariaG8.DAL", "ProyectoVeterinariaG8.DAL\ProyectoVeterinariaG8.DAL.csproj", "{40953508-FA7A-4EDC-A91B-089146B5FE05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProyectoVeterinariaG8.DAL", "ProyectoVeterinariaG8.DAL\ProyectoVeterinariaG8.DAL.csproj", "{40953508-FA7A-4EDC-A91B-089146B5FE05}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{91B08E7A-0776-49CF-B3A5-440E0B2F1C55}"
+	ProjectSection(SolutionItems) = preProject
+		Scripts.sql = Scripts.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

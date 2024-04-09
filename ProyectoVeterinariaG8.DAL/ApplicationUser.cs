@@ -25,7 +25,6 @@ namespace ProyectoVeterinariaG8.DAL
         [Display(Name = "Segundo Apellido")]
         public string SegundoApellido { get; set; }
 
-        [Required]
         [Display(Name = "Imagen del Usuario")]
         public byte[] Imagen { get; set; }
 
