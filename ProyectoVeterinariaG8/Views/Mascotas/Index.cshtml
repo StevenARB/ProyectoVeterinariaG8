@@ -34,6 +34,9 @@
                 @Html.DisplayNameFor(model => model.Peso)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.EstadoId)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.UsuarioPropietarioId)
             </th>
             <th></th>
@@ -62,6 +65,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Peso)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstadoMascota.Descripcion)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.UsuarioPropietarioId)

@@ -30,3 +30,15 @@ INSERT INTO [dbo].[AspNetRoles]
            ,'Administrador'
            ,'Administrador')
 GO
+
+INSERT INTO [dbo].[EstadosMascotas]
+           ([Descripcion])
+     VALUES
+           ('Activa')
+GO
+
+INSERT INTO [dbo].[EstadosMascotas]
+           ([Descripcion])
+     VALUES
+           ('Inactiva')
+GO
