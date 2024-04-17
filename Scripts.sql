@@ -34,11 +34,11 @@ GO
 INSERT INTO [dbo].[EstadosMascotas]
            ([Descripcion])
      VALUES
-           ('Activa')
+           ('Activo')
 GO
 
 INSERT INTO [dbo].[EstadosMascotas]
            ([Descripcion])
      VALUES
-           ('Inactiva')
+           ('Inactivo')
 GO

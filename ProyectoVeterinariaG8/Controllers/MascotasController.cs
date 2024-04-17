@@ -22,7 +22,7 @@ namespace ProyectoVeterinariaG8.Controllers
         // GET: Mascotas
         public async Task<IActionResult> Index()
         {
-            var veterinariaContext = _context.Mascotas.Include(m => m.RazaMascota).Include(m => m.TipoMascota).Include(m => m.EstadoMascota);
+            var veterinariaContext = _context.Mascotas.Include(m => m.RazaMascota).Include(m => m.TipoMascota).Include(m => m.EstadoMascota).Where(m => m.EstadoMascota.Descripcion == "Activo");
             return View(await veterinariaContext.ToListAsync());
         }
 
@@ -52,8 +52,7 @@ namespace ProyectoVeterinariaG8.Controllers
         // GET: Mascotas/Create
         public IActionResult Create()
         {
-            ViewData["RazaId"] = new SelectList(_context.RazasMascotas, "RazaId", "Descripcion");
-            ViewData["TipoId"] = new SelectList(_context.TiposMascotas, "TipoId", "Descripcion");
+            ViewData["TiposRazas"] = _context.TiposMascotas.Include(tipo => tipo.RazasMascota).ToList();
             ViewData["EstadoId"] = new SelectList(_context.EstadosMascotas, "EstadoId", "Descripcion");
             return View();
         }
@@ -92,8 +91,6 @@ namespace ProyectoVeterinariaG8.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RazaId"] = new SelectList(_context.RazasMascotas, "RazaId", "Descripcion", mascota.RazaId);
-            ViewData["TipoId"] = new SelectList(_context.TiposMascotas, "TipoId", "Descripcion", mascota.TipoId);
             ViewData["EstadoId"] = new SelectList(_context.EstadosMascotas, "EstadoId", "Descripcion", mascota.EstadoId);
             return View(mascota);
         }
@@ -111,8 +108,7 @@ namespace ProyectoVeterinariaG8.Controllers
             {
                 return NotFound();
             }
-            ViewData["RazaId"] = new SelectList(_context.RazasMascotas, "RazaId", "Descripcion");
-            ViewData["TipoId"] = new SelectList(_context.TiposMascotas, "TipoId", "Descripcion");
+            ViewData["TiposRazas"] = _context.TiposMascotas.Include(tipo => tipo.RazasMascota).ToList();
             ViewData["EstadoId"] = new SelectList(_context.EstadosMascotas, "EstadoId", "Descripcion");
             return View(mascota);
         }
@@ -150,8 +146,7 @@ namespace ProyectoVeterinariaG8.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RazaId"] = new SelectList(_context.RazasMascotas, "RazaId", "Descripcion", mascota.RazaId);
-            ViewData["TipoId"] = new SelectList(_context.TiposMascotas, "TipoId", "Descripcion", mascota.TipoId);
+            ViewData["TiposRazas"] = _context.TiposMascotas.Include(tipo => tipo.RazasMascota).ToList();
             ViewData["EstadoId"] = new SelectList(_context.EstadosMascotas, "EstadoId", "Descripcion", mascota.EstadoId);
             return View(mascota);
         }

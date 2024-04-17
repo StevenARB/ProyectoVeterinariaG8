@@ -21,7 +21,7 @@ namespace ProyectoVeterinariaG8.Controllers
         // GET: MascotasVacunas
         public async Task<IActionResult> Index()
         {
-            var veterinariaContext = _context.MascotasVacunas.Include(m => m.Mascota);
+            var veterinariaContext = _context.MascotasVacunas.Include(m => m.Mascota).ThenInclude(m => m.EstadoMascota).Where(m => m.Mascota.EstadoMascota.Descripcion == "Activo");
             return View(await veterinariaContext.ToListAsync());
         }
 

@@ -19,11 +19,25 @@
             </div>
             <div class="form-group">
                 <label asp-for="TipoId" class="control-label"></label>
-                <select asp-for="TipoId" class ="form-control" asp-items="ViewBag.TipoId"></select>
+                <select asp-for="TipoId" class ="form-control">
+                    <option value="" disabled selected>Seleccionar Tipo</option>
+                    @foreach (var tipo in ViewBag.TiposRazas)
+                    {
+                        <option value="@tipo.TipoId">@tipo.Descripcion</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="RazaId" class="control-label"></label>
-                <select asp-for="RazaId" class ="form-control" asp-items="ViewBag.RazaId"></select>
+                <select asp-for="RazaId" class ="form-control">
+                    <option value="" disabled selected>Seleccionar Raza</option>
+                    @foreach (var tipo in ViewBag.TiposRazas) {
+                        @foreach (var raza in tipo.RazasMascota)
+                        {
+                            <option value="@raza.RazaId" data-tipo-id="@tipo.TipoId" style="display:none;">@raza.Descripcion</option>
+                        }
+                    }
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="Genero" class="control-label"></label>
@@ -74,4 +88,35 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var tipo = document.getElementById('TipoId');
+            var raza = document.getElementById('RazaId');
+            var tipoAnterior = tipo.value;
+
+            function filtrarRazas() {
+                var tipoSeleccionado = tipo.value;
+                var opcionesRaza = raza.options;
+
+                if (tipoSeleccionado != tipoAnterior) {
+                    tipoAnterior = tipoSeleccionado;
+                    raza.value = '';
+                }
+
+                for (var i = 0; i < opcionesRaza.length; i++) {
+                    var tipoId = opcionesRaza[i].getAttribute('data-tipo-id');
+
+                    if (tipoId === tipoSeleccionado) {
+                        opcionesRaza[i].style.display = 'block';
+                    } else {
+                        opcionesRaza[i].style.display = 'none';
+                    }
+                }
+            }
+
+            filtrarRazas();
+
+            tipo.addEventListener('change', filtrarRazas);
+        });
+</script>
 }
