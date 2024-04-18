@@ -4,14 +4,27 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Mascotas</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<hr />
+
+<div class="d-flex flex-wrap justify-content-between">
+    <a class="btn btn-primary my-3" asp-action="Create">Crear Mascota</a>
+    <div>
+        <a class="btn btn-outline-dark my-3" asp-controller="TipoMascotas" asp-action="Index">Tipos</a>
+        <a class="btn btn-outline-dark my-3" asp-controller="RazaMascotas" asp-action="Index">Razas</a>
+        <a class="btn btn-outline-dark my-3" asp-controller="MascotasPadecimientos" asp-action="Index">Padecimientos</a>
+        <a class="btn btn-outline-dark my-3" asp-controller="MascotasVacunas" asp-action="Index">Vacunas</a>
+        <a class="btn btn-outline-dark my-3" asp-controller="MascotasImagenes" asp-action="Index">Imágenes</a>
+    </div>
+</div>
+
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MascotaId)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nombre)
             </th>
@@ -31,6 +44,9 @@
                 @Html.DisplayNameFor(model => model.Peso)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.EstadoId)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.UsuarioPropietarioId)
             </th>
             <th></th>
@@ -39,6 +55,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MascotaId)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
@@ -56,6 +75,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Peso)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstadoMascota.Descripcion)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.UsuarioPropietarioId)

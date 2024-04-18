@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,7 @@ namespace ProyectoVeterinariaG8.Controllers
         // GET: Mascotas
         public async Task<IActionResult> Index()
         {
-            var veterinariaContext = _context.Mascotas.Include(m => m.RazaMascota).Include(m => m.TipoMascota);
+            var veterinariaContext = _context.Mascotas.Include(m => m.RazaMascota).Include(m => m.TipoMascota).Include(m => m.EstadoMascota).Where(m => m.EstadoMascota.Descripcion == "Activo");
             return View(await veterinariaContext.ToListAsync());
         }
 
@@ -36,6 +37,7 @@ namespace ProyectoVeterinariaG8.Controllers
             var mascota = await _context.Mascotas
                 .Include(m => m.RazaMascota)
                 .Include(m => m.TipoMascota)
+                .Include(m => m.EstadoMascota)
                 .Include(m => m.MascotaImagenes)
                 .FirstOrDefaultAsync(m => m.MascotaId == id);
 
@@ -50,8 +52,8 @@ namespace ProyectoVeterinariaG8.Controllers
         // GET: Mascotas/Create
         public IActionResult Create()
         {
-            ViewData["RazaId"] = new SelectList(_context.RazasMascotas, "RazaId", "Descripcion");
-            ViewData["TipoId"] = new SelectList(_context.TiposMascotas, "TipoId", "Descripcion");
+            ViewData["TiposRazas"] = _context.TiposMascotas.Include(tipo => tipo.RazasMascota).ToList();
+            ViewData["EstadoId"] = new SelectList(_context.EstadosMascotas, "EstadoId", "Descripcion");
             return View();
         }
 
@@ -60,7 +62,7 @@ namespace ProyectoVeterinariaG8.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MascotaId,Nombre,TipoId,RazaId,Genero,Edad,Peso,UsuarioPropietarioId,UsuarioCreacionId,UsuarioModificacionId")] Mascota mascota, IFormFile imagen)
+        public async Task<IActionResult> Create([Bind("MascotaId,Nombre,TipoId,RazaId,Genero,Edad,Peso,EstadoId,UsuarioPropietarioId,UsuarioCreacionId,UsuarioModificacionId")] Mascota mascota, IFormFile imagen)
         {
             if (ModelState.IsValid)
             {
@@ -89,8 +91,7 @@ namespace ProyectoVeterinariaG8.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RazaId"] = new SelectList(_context.RazasMascotas, "RazaId", "Descripcion", mascota.RazaId);
-            ViewData["TipoId"] = new SelectList(_context.TiposMascotas, "TipoId", "Descripcion", mascota.TipoId);
+            ViewData["EstadoId"] = new SelectList(_context.EstadosMascotas, "EstadoId", "Descripcion", mascota.EstadoId);
             return View(mascota);
         }
 
@@ -107,8 +108,8 @@ namespace ProyectoVeterinariaG8.Controllers
             {
                 return NotFound();
             }
-            ViewData["RazaId"] = new SelectList(_context.RazasMascotas, "RazaId", "Descripcion");
-            ViewData["TipoId"] = new SelectList(_context.TiposMascotas, "TipoId", "Descripcion");
+            ViewData["TiposRazas"] = _context.TiposMascotas.Include(tipo => tipo.RazasMascota).ToList();
+            ViewData["EstadoId"] = new SelectList(_context.EstadosMascotas, "EstadoId", "Descripcion");
             return View(mascota);
         }
 
@@ -117,7 +118,7 @@ namespace ProyectoVeterinariaG8.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MascotaId,Nombre,TipoId,RazaId,Genero,Edad,Peso,UsuarioPropietarioId,UsuarioCreacionId,UsuarioModificacionId,FechaCreacion")] Mascota mascota)
+        public async Task<IActionResult> Edit(int id, [Bind("MascotaId,Nombre,TipoId,RazaId,Genero,Edad,Peso,EstadoId,UsuarioPropietarioId,UsuarioCreacionId,UsuarioModificacionId,FechaCreacion")] Mascota mascota)
         {
             if (id != mascota.MascotaId)
             {
@@ -145,8 +146,8 @@ namespace ProyectoVeterinariaG8.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RazaId"] = new SelectList(_context.RazasMascotas, "RazaId", "Descripcion", mascota.RazaId);
-            ViewData["TipoId"] = new SelectList(_context.TiposMascotas, "TipoId", "Descripcion", mascota.TipoId);
+            ViewData["TiposRazas"] = _context.TiposMascotas.Include(tipo => tipo.RazasMascota).ToList();
+            ViewData["EstadoId"] = new SelectList(_context.EstadosMascotas, "EstadoId", "Descripcion", mascota.EstadoId);
             return View(mascota);
         }
 
@@ -161,6 +162,7 @@ namespace ProyectoVeterinariaG8.Controllers
             var mascota = await _context.Mascotas
                 .Include(m => m.RazaMascota)
                 .Include(m => m.TipoMascota)
+                .Include(m => m.EstadoMascota)
                 .FirstOrDefaultAsync(m => m.MascotaId == id);
             if (mascota == null)
             {
@@ -180,9 +182,11 @@ namespace ProyectoVeterinariaG8.Controllers
                 return Problem("Entity set 'VeterinariaContext.Mascotas'  is null.");
             }
             var mascota = await _context.Mascotas.FindAsync(id);
-            if (mascota != null)
+            var estado = await _context.EstadosMascotas.FirstOrDefaultAsync(e => e.Descripcion == "Inactiva");
+            if (mascota != null && estado != null)
             {
-                _context.Mascotas.Remove(mascota);
+                mascota.EstadoId = estado.EstadoId;
+                _context.Update(mascota);
             }
             
             await _context.SaveChangesAsync();

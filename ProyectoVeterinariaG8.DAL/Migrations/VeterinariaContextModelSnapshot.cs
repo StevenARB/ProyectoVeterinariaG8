@@ -89,6 +89,23 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
                     b.ToTable("EstadosCita");
                 });
 
+            modelBuilder.Entity("ProyectoVeterinariaG8.DAL.EstadoMascota", b =>
+                {
+                    b.Property<int>("EstadoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EstadoId"));
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("EstadoId");
+
+                    b.ToTable("EstadosMascotas");
+                });
+
             modelBuilder.Entity("ProyectoVeterinariaG8.DAL.EstadoUsuario", b =>
                 {
                     b.Property<int>("EstadoId")
@@ -115,6 +132,9 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MascotaId"));
 
                     b.Property<int>("Edad")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EstadoId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("FechaCreacion")
@@ -152,6 +172,8 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("MascotaId");
+
+                    b.HasIndex("EstadoId");
 
                     b.HasIndex("RazaId");
 
@@ -219,13 +241,21 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VacunaId"));
 
-                    b.Property<string>("Descripcion")
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MascotaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Producto")
                         .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.Property<int>("MascotaId")
-                        .HasColumnType("int");
+                    b.Property<string>("Tipo")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.HasKey("VacunaId");
 
@@ -400,6 +430,12 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
 
             modelBuilder.Entity("ProyectoVeterinariaG8.DAL.Mascota", b =>
                 {
+                    b.HasOne("ProyectoVeterinariaG8.DAL.EstadoMascota", "EstadoMascota")
+                        .WithMany("Mascotas")
+                        .HasForeignKey("EstadoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ProyectoVeterinariaG8.DAL.RazaMascota", "RazaMascota")
                         .WithMany("Mascotas")
                         .HasForeignKey("RazaId")
@@ -427,6 +463,8 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
                         .HasForeignKey("UsuarioPropietarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("EstadoMascota");
 
                     b.Navigation("RazaMascota");
 
@@ -500,6 +538,11 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
                     b.Navigation("EstadoUsuario");
 
                     b.Navigation("Rol");
+                });
+
+            modelBuilder.Entity("ProyectoVeterinariaG8.DAL.EstadoMascota", b =>
+                {
+                    b.Navigation("Mascotas");
                 });
 
             modelBuilder.Entity("ProyectoVeterinariaG8.DAL.Mascota", b =>

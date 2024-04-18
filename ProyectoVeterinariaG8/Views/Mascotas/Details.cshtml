@@ -39,11 +39,29 @@
                 </div>
             </div>
         </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.MascotaId)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.MascotaId)
+        </dd>
         <dt class = "col-sm-3">
             @Html.DisplayNameFor(model => model.Nombre)
         </dt>
         <dd class = "col-sm-9">
             @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.TipoMascota)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.TipoMascota.Descripcion)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.RazaMascota)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.RazaMascota.Descripcion)
         </dd>
         <dt class = "col-sm-3">
             @Html.DisplayNameFor(model => model.Genero)
@@ -64,16 +82,10 @@
             @Html.DisplayFor(model => model.Peso)
         </dd>
         <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.TipoMascota)
+            @Html.DisplayNameFor(model => model.EstadoId)
         </dt>
         <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.TipoMascota.Descripcion)
-        </dd>
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.RazaMascota)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.RazaMascota.Descripcion)
+            @Html.DisplayFor(model => model.EstadoMascota.Descripcion)
         </dd>
         <dt class = "col-sm-3">
             @Html.DisplayNameFor(model => model.UsuarioPropietarioId)

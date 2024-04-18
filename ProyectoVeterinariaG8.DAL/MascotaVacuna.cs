@@ -17,13 +17,24 @@ namespace ProyectoVeterinariaG8.DAL
 
         [Required]
         [ForeignKey("Mascota")]
+        [DisplayName("Mascota")]
         public int MascotaId { get; set; }
 
         [Required]
         [MaxLength(300)]
-        [DisplayName("Descripción de Vacuna")]
-        public string Descripcion { get; set; }
+        [DisplayName("Tipo")]
+        public string Tipo { get; set; }
 
+        [Required]
+        [DisplayName("Fecha")]
+        public DateTime Fecha { get; set; }
+
+        [Required]
+        [MaxLength(300)]
+        [DisplayName("Producto")]
+        public string Producto { get; set; }
+
+        [DisplayName("Mascota")]
         public Mascota? Mascota { get; set; }
     }
 }

@@ -37,5 +37,7 @@ namespace ProyectoVeterinariaG8.DAL
         public virtual DbSet<TipoMascota> TiposMascotas { get; set; }
 
         public virtual DbSet<RazaMascota> RazasMascotas { get; set; }
+
+        public virtual DbSet<EstadoMascota> EstadosMascotas { get; set; }
     }
 }

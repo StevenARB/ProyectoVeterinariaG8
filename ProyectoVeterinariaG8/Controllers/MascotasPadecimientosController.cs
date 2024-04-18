@@ -21,7 +21,7 @@ namespace ProyectoVeterinariaG8.Controllers
         // GET: MascotasPadecimientos
         public async Task<IActionResult> Index()
         {
-            var veterinariaContext = _context.MascotasPadecimientos.Include(m => m.Mascota);
+            var veterinariaContext = _context.MascotasPadecimientos.Include(m => m.Mascota).ThenInclude(m => m.EstadoMascota).Where(m => m.Mascota.EstadoMascota.Descripcion == "Activo");
             return View(await veterinariaContext.ToListAsync());
         }
 
@@ -47,7 +47,8 @@ namespace ProyectoVeterinariaG8.Controllers
         // GET: MascotasPadecimientos/Create
         public IActionResult Create()
         {
-            ViewData["MascotaId"] = new SelectList(_context.Mascotas, "MascotaId", "MascotaId");
+            var _contextMascotas = _context.Mascotas.Include(m => m.EstadoMascota).Where(m => m.EstadoMascota.Descripcion == "Activo");
+            ViewData["MascotaId"] = new SelectList(_contextMascotas, "MascotaId", "MascotaId");
             return View();
         }
 
@@ -64,7 +65,8 @@ namespace ProyectoVeterinariaG8.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MascotaId"] = new SelectList(_context.Mascotas, "MascotaId", "MascotaId", mascotaPadecimiento.MascotaId);
+            var _contextMascotas = _context.Mascotas.Include(m => m.EstadoMascota).Where(m => m.EstadoMascota.Descripcion == "Activo");
+            ViewData["MascotaId"] = new SelectList(_contextMascotas, "MascotaId", "MascotaId", mascotaPadecimiento.MascotaId);
             return View(mascotaPadecimiento);
         }
 
@@ -81,7 +83,8 @@ namespace ProyectoVeterinariaG8.Controllers
             {
                 return NotFound();
             }
-            ViewData["MascotaId"] = new SelectList(_context.Mascotas, "MascotaId", "MascotaId", mascotaPadecimiento.MascotaId);
+            var _contextMascotas = _context.Mascotas.Include(m => m.EstadoMascota).Where(m => m.EstadoMascota.Descripcion == "Activo");
+            ViewData["MascotaId"] = new SelectList(_contextMascotas, "MascotaId", "MascotaId", mascotaPadecimiento.MascotaId);
             return View(mascotaPadecimiento);
         }
 
@@ -117,7 +120,8 @@ namespace ProyectoVeterinariaG8.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MascotaId"] = new SelectList(_context.Mascotas, "MascotaId", "MascotaId", mascotaPadecimiento.MascotaId);
+            var _contextMascotas = _context.Mascotas.Include(m => m.EstadoMascota).Where(m => m.EstadoMascota.Descripcion == "Activo");
+            ViewData["MascotaId"] = new SelectList(_contextMascotas, "MascotaId", "MascotaId", mascotaPadecimiento.MascotaId);
             return View(mascotaPadecimiento);
         }
 

@@ -8,51 +8,67 @@
 
 <h4>Cita</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="MascotaId" class="control-label"></label>
-                <select asp-for="MascotaId" class="form-control" asp-items="ViewBag.MascotaId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="FechayHora" class="control-label"></label>
-                <input asp-for="FechayHora" class="form-control" />
-                <span asp-validation-for="FechayHora" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PrimerVeterinarioId" class="control-label"></label>
-                <select asp-for="PrimerVeterinarioId" class="form-control" asp-items="ViewBag.PrimerVeterinarioId"></select>
-                @Html.ValidationMessageFor(model => model.PrimerVeterinarioId, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                <label asp-for="SegundoVeterinarioId" class="control-label"></label>
-                <select asp-for="SegundoVeterinarioId" class="form-control" asp-items="ViewBag.SegundoVeterinarioId"></select>
-                @Html.ValidationMessageFor(model => model.SegundoVeterinarioId, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                <label asp-for="DescripcionCita" class="control-label"></label>
-                <input asp-for="DescripcionCita" class="form-control" />
-                <span asp-validation-for="DescripcionCita" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DiagnosticoCita" class="control-label"></label>
-                <input asp-for="DiagnosticoCita" class="form-control" />
-                <span asp-validation-for="DiagnosticoCita" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MedicamentoId" class="control-label"></label>
-                <select asp-for="MedicamentoId" class="form-control" asp-items="ViewBag.MedicamentoId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="EstadoCitaId" class="control-label"></label>
-                <select asp-for="EstadoCitaId" class="form-control" asp-items="ViewBag.EstadoCitaId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label asp-for="MascotaId" class="control-label">Mascota</label>
+                    <select asp-for="MascotaId" class="form-control" asp-items="ViewBag.MascotaId"></select>>
+                        <option value="">Selecciona una mascota</option>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="FechayHora" class="control-label">Fecha y Hora</label>
+                    <input asp-for="FechayHora" class="form-control" />
+                    <span asp-validation-for="FechayHora" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="PrimerVeterinarioId" class="control-label">Primer Veterinario</label>
+                    <select asp-for="PrimerVeterinarioId" class="form-control" asp-items="ViewBag.PrimerVeterinarioId"></select>>
+                        <option value="">Selecciona un primer veterinario</option>
+                    <span asp-validation-for="PrimerVeterinarioId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="SegundoVeterinarioId" class="control-label">Segundo Veterinario</label>
+                    <select asp-for="SegundoVeterinarioId" class="form-control" asp-items="ViewBag.SegundoVeterinarioId"></select>>
+                        <option value="">Selecciona un segundo veterinario</option>
+                    <span asp-validation-for="SegundoVeterinarioId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="DescripcionCita" class="control-label">Descripción de la cita</label>
+                    <input asp-for="DescripcionCita" class="form-control" />
+                    <span asp-validation-for="DescripcionCita" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="DiagnosticoCita" class="control-label">Diagnóstico de la cita</label>
+                    <input asp-for="DiagnosticoCita" class="form-control" />
+                    <span asp-validation-for="DiagnosticoCita" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="MedicamentoId" class="control-label">Medicamento</label>
+                    <select asp-for="MedicamentoId" class="form-control" asp-items="ViewBag.MedicamentoId"></select>>
+                        <option value="">Selecciona un medicamento</option>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="EstadoCitaId" class="control-label">Estado de la cita</label>
+                    <select asp-for="EstadoCitaId" class="form-control" asp-items="ViewBag.EstadoCitaId"></select>>
+                        <option value="">Selecciona un estado de la cita</option>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-lg btn-success btn-block">Crear</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 

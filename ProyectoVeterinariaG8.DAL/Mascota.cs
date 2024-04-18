@@ -42,6 +42,11 @@ namespace ProyectoVeterinariaG8.DAL
         public double Peso { get; set; }
 
         [Required]
+        [ForeignKey("EstadoMascota")]
+        [DisplayName("Estado de Mascota")]
+        public int EstadoId { get; set; }
+
+        [Required]
         [ForeignKey(nameof(UsuarioPropietario))]
         [DisplayName("Código Dueño")]
         public int UsuarioPropietarioId { get; set; }
@@ -67,6 +72,9 @@ namespace ProyectoVeterinariaG8.DAL
 
         [DisplayName("Raza")]
         public RazaMascota? RazaMascota { get; set; }
+
+        [DisplayName("Estado")]
+        public EstadoMascota? EstadoMascota { get; set; }
 
         public Usuario? UsuarioPropietario { get; set; }
 
