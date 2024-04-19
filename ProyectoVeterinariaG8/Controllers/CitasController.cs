@@ -153,11 +153,56 @@ namespace ProyectoVeterinariaG8.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CitaId,MascotaId,FechayHora,PrimerVeterinarioId,SegundoVeterinario,DescripcionCita,DiagnosticoCita,MedicamentoId,EstadoCitaId")] Cita cita)
+        public async Task<IActionResult> Edit(int id, [Bind("CitaId,MascotaId,FechayHora,PrimerVeterinarioId,SegundoVeterinarioId,DescripcionCita,DiagnosticoCita,MedicamentoId,EstadoCitaId")] Cita cita)
         {
             if (id != cita.CitaId)
             {
                 return NotFound();
+            }
+
+            //Validar que no se aparte una cita Sabado o Domingo
+            if (cita.FechayHora.DayOfWeek == DayOfWeek.Sunday)
+            {
+                ModelState.AddModelError("FechayHora", "La fecha seleccionada no puede ser");
+            }
+            //Validar que no se aparte una cita entre las 7am y las 6pm
+            int horaSeleccionada = cita.FechayHora.Hour;
+            if (horaSeleccionada < 7 || horaSeleccionada >= 18)
+            {
+                ModelState.AddModelError("FechayHora", "La hora seleccionada debe estar entre las 7am y las 6pm");
+            }
+
+            //Restriccion Veterinario 1 cita fecha
+            if (_context.Citas.Any(c => c.PrimerVeterinarioId == cita.PrimerVeterinarioId && c.FechayHora == cita.FechayHora))
+            {
+                ModelState.AddModelError("PrimerVeterinarioId", "El veterinario ya tiene una cita asignada en la misma fecha y hora");
+            }
+
+
+            //Restriccion Veterinario 2 cita fecha
+            if (_context.Citas.Any(c => c.SegundoVeterinarioId == cita.SegundoVeterinarioId && c.FechayHora == cita.FechayHora))
+            {
+                ModelState.AddModelError("SegundoVeterinarioId", "El veterinario ya tiene una cita asignada en la misma fecha y hora");
+            }
+
+            //Verificar si el veterinario 1 esta activo
+            var primerVeterinario = await _context.Usuarios.FindAsync(cita.PrimerVeterinarioId);
+            if (primerVeterinario == null || primerVeterinario.EstadoId == 2)
+            {
+                ModelState.AddModelError("PrimerVeterinarioId", "El primer veterinario seleccionado está inactivo");
+            }
+
+            //Verificar si el veterinario 2 esta activo
+            var segundoVeterinario = await _context.Usuarios.FindAsync(cita.SegundoVeterinarioId);
+            if (segundoVeterinario == null || segundoVeterinario.EstadoId == 2)
+            {
+                ModelState.AddModelError("SegundoVeterinarioId", "El Segundo veterinario seleccionado está inactivo");
+            }
+
+            //Verificar que el veterinario 1 y veterinario 2 son iguales
+            if (cita.PrimerVeterinarioId == cita.SegundoVeterinarioId)
+            {
+                ModelState.AddModelError("SegundoVeterinarioId", "El segundo veterinario debe ser diferente al primer veterinario");
             }
 
             if (ModelState.IsValid)
