@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<h2>Administracion</h2>
+<hr />
+<h3>Control de Usuarios</h3>
+<hr />
+
+<h3>Control de tipos de mascotas</h3>
+<hr />
+<div class="row">
+    @foreach (var tiposMascotas in ViewBag.tipoMascotas)
+    {
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><strong>Tipo:  </strong> @tiposMascotas.Descripcion</h5>
+                    <p class="card-text"><strong>ID: </strong> @tiposMascotas.TipoId</p>
+                    <a href="@Url.Action("Edit","TipoMascotas", new { id = tiposMascotas.TipoId})" class="btn btn-primary">Editar</a>
+                    <a href="@Url.Action("Edit","TipoMascotas", new { id = tiposMascotas.TipoId})" class="btn btn-primary">Editar</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<h3>Control de Razas</h3>
+<hr />
+
+<h3>Contro de Medicamentos</h3>
+<hr />
+
+
+
+

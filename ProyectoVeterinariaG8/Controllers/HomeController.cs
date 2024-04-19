@@ -65,6 +65,22 @@ namespace ProyectoVeterinariaG8.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Administrador")]
+        public ActionResult HomeAdministrador ()
+        {
+            var tipoMascotas = _context.TiposMascotas.ToList();
+            ViewBag.tipoMascotas = tipoMascotas;
+
+            var razasMascotas = _context.RazasMascotas.ToList();
+            ViewBag.razasMascotas = razasMascotas;
+
+            var medicamentos = _context.Medicamentos.ToList();
+            ViewBag.medicamentos = medicamentos;
+
+            var usuarios = _context;
+
+            return View();      
+        }
 
         public IActionResult Privacy()
         {
