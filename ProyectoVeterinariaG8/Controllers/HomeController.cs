@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProyectoVeterinariaG8.DAL;
@@ -23,7 +24,8 @@ namespace ProyectoVeterinariaG8.Controllers
         {
             return View();
         }
-        
+
+        [Authorize(Roles = "Veterinario")]
         public ActionResult HomeVeterinario()
         {
             var fechaActual = DateTime.Now;
@@ -43,6 +45,7 @@ namespace ProyectoVeterinariaG8.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Cliente")]
         public ActionResult HomeCliente()
         {
             var fechaActual = DateTime.Now;
