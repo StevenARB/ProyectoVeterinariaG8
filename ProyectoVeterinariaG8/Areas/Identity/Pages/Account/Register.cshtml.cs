@@ -27,20 +27,17 @@ namespace ProyectoVeterinariaG8.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IUserStore<ApplicationUser> _userStore;
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
-            RoleManager<IdentityRole> roleManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger)
         {
             _userManager = userManager;
-            _roleManager = roleManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
@@ -95,8 +92,6 @@ namespace ProyectoVeterinariaG8.Areas.Identity.Pages.Account
             [Display(Name = "Estado")]
             public int EstadoUsuarioId { get; set; }
 
-            public string IdRol { get; set; }
-
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -129,8 +124,6 @@ namespace ProyectoVeterinariaG8.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            var roles = _roleManager.Roles;
-            ViewData["Roles"] = new SelectList(roles, "Id", "NormalizedName");
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -157,11 +150,11 @@ namespace ProyectoVeterinariaG8.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    string nombreRole = _roleManager.Roles.Where(r => r.Id == Input.IdRol).FirstOrDefault().NormalizedName; 
+                    //string nombreRole = _roleManager.Roles.Where(r => r.Id == Input.IdRol).FirstOrDefault().NormalizedName; 
 
-                    var roleResult = await _userManager.AddToRoleAsync(user, nombreRole);
+                    var roleResult = await _userManager.AddToRoleAsync(user, "CLIENTE");
 
-                    var userId = await _userManager.GetUserIdAsync(user);
+                    //var userId = await _userManager.GetUserIdAsync(user);
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
