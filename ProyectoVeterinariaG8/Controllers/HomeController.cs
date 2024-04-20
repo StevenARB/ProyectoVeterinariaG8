@@ -26,6 +26,7 @@ namespace ProyectoVeterinariaG8.Controllers
         }
 
         [Authorize(Roles = "Veterinario")]
+        [Authorize(Roles = "Administrador")]
         public ActionResult HomeVeterinario()
         {
             var fechaActual = DateTime.Now;
@@ -46,6 +47,7 @@ namespace ProyectoVeterinariaG8.Controllers
         }
 
         [Authorize(Roles = "Cliente")]
+        [Authorize(Roles = "Administrador")]
         public ActionResult HomeCliente()
         {
             var fechaActual = DateTime.Now;
@@ -77,7 +79,6 @@ namespace ProyectoVeterinariaG8.Controllers
             var medicamentos = _context.Medicamentos.ToList();
             ViewBag.medicamentos = medicamentos;
 
-            var usuarios = _context;
 
             return View();      
         }

@@ -1,0 +1,89 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<h2>Administracion</h2>
+<hr />
+<div>
+    <h4>Control de Usuarios</h4>
+
+    <a class=" btn btn-info text-white" asp-area="" asp-controller="Admin" asp-action="CreateUser">Crear un Usuario</a>
+</div>
+<hr />
+
+<div class="row">
+    @foreach (var usuarios in ViewBag._usuarios)
+    {
+        <div class="col-sm-4">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title"><strong>Nombre:  </strong> @usuarios.Nombre, @usuarios.PrimerApellido, @usuarios.SegundoApellido</h5>
+                    <p class="card-text"><strong>Correo: </strong> @usuarios.Email</p>
+                    <p class="card-text"><strong>Numero: </strong> @usuarios.PhoneNumber</p>
+                    <a href="@Url.Action("EditUser","Admin", new { id = usuarios.Id})" class="btn btn-primary">Editar</a>
+                    <a href="@Url.Action("DeleteUser","Medicamentos", new { id = usuarios.Id})" class="btn btn-primary">Eliminar</a>
+                    <a href="@Url.Action("DetailsUser","Medicamentos", new { id = usuarios.Id})" class="btn btn-primary">Detalles</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<hr />
+
+<div>
+    <h4>Control de tipos de mascotas</h4>
+
+    <a class=" btn btn-info text-white" asp-area="" asp-controller="TipoMascotas" asp-action="Create">Crear un tipo de Mascota</a>
+</div>
+
+<hr />
+
+<div class="row">
+    @foreach (var tiposMascotas in ViewBag.tipoMascotas)
+    {
+        <div class="col-sm-4">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title"><strong>Tipo:  </strong> @tiposMascotas.Descripcion</h5>
+                    <p class="card-text"><strong>ID: </strong> @tiposMascotas.TipoId</p>
+                    <a href="@Url.Action("Edit","TipoMascotas", new { id = tiposMascotas.TipoId})" class="btn btn-primary">Editar</a>
+                    <a href="@Url.Action("Delete","TipoMascotas", new { id = tiposMascotas.TipoId})" class="btn btn-primary">Eliminar</a>
+                    <a href="@Url.Action("Details","TipoMascotas", new { id = tiposMascotas.TipoId})" class="btn btn-primary">Detalles</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<hr />
+
+<div>
+    <h4>Control de Razas</h4>
+
+    <a class=" btn btn-info text-white" asp-area="" asp-controller="RazaMascotas" asp-action="Create">Crear una raza</a>
+</div>
+
+<hr />
+
+<div class="row">
+    @foreach (var razasMascotas in ViewBag.razasMascotas)
+    {
+        <div class="col-sm-4">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title"><strong>Raza:  </strong> @razasMascotas.Descripcion</h5>
+                    <p class="card-text"><strong>Tipo: </strong> @razasMascotas.TipoMascota.Descripcion</p>
+                    <p class="card-text"><strong>ID: </strong> @razasMascotas.RazaId</p>
+                    <a href="@Url.Action("Edit","RazaMascotas", new { idM = razasMascotas.RazaId})" class="btn btn-primary">Editar</a>
+                    <a href="@Url.Action("Delete","RazaMascotas", new { idM = razasMascotas.RazaId})" class="btn btn-primary">Eliminar</a>
+                    <a href="@Url.Action("Details","RazaMascotas", new { idM = razasMascotas.RazaId})" class="btn btn-primary">Detalles</a>
+
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+
+
