@@ -35,6 +35,7 @@ namespace ProyectoVeterinariaG8.DAL
         [Display(Name = "Estado")]
         public int EstadoUsuarioId { get; set; }
 
+        [Display(Name = "Estado")]
         public EstadoUsuario? EstadoUsuario { get; set; }
     }
 }

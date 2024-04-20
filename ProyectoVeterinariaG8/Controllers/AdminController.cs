@@ -3,9 +3,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using ProyectoVeterinariaG8.DAL;
 using ProyectoVeterinariaG8.Models;
+using System.Security.Claims;
+using System;
 
 namespace ProyectoVeterinariaG8.Controllers
 {
@@ -44,7 +47,7 @@ namespace ProyectoVeterinariaG8.Controllers
             ViewBag._usuarios = usuarios;
 
             var usuario = await _userManager.GetUserAsync(User);
-            if (usuario !=null)
+            if (usuario != null)
             {
                 var UserId = usuario.Id;
             }
@@ -55,6 +58,26 @@ namespace ProyectoVeterinariaG8.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        [Authorize(Roles = "Administrador")]
+        public async Task<IActionResult> DetailsUser(string? id)
+        {
+            if (id == null || _userManager.Users == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var roles = await _userManager.GetRolesAsync(user);
+            ViewBag.Roles = roles;
+
+            return View(user);
         }
 
         [Authorize(Roles = "Administrador")]
@@ -170,7 +193,7 @@ namespace ProyectoVeterinariaG8.Controllers
 
                 var result = await _userManager.UpdateAsync(user);
 
-                if (result.Succeeded) 
+                if (result.Succeeded)
                 {
                     TempData["UserUpdatedMessage"] = "El usuario se ha actualizado correctamente.";
                     //return RedirectToAction(nameof(Index));
@@ -181,7 +204,52 @@ namespace ProyectoVeterinariaG8.Controllers
 
             ViewData["Estados"] = new SelectList(_veterinariaContext.EstadosUsuario, "EstadoId", "Descripcion");
             ViewData["Roles"] = new SelectList(_roleManager.Roles, "Id", "NormalizedName");
-            return View(model);
+            return RedirectToAction(nameof(HomeAdministrador));
+        }
+
+        [Authorize(Roles = "Administrador")]
+        public async Task<IActionResult> DeleteUser(string? id)
+        {
+            if (id == null || _userManager.Users == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var roles = await _userManager.GetRolesAsync(user);
+            ViewBag.Roles = roles;
+
+            return View(user);
+        }
+
+        [Authorize(Roles = "Administrador")]
+        [HttpPost, ActionName("DeleteUser")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteUserConfirmed(string? id)
+        {
+            if (id == null || _userManager.Users == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var result = await _userManager.DeleteAsync(user);
+            if (result.Succeeded) 
+            {
+                TempData["UserDeleted"] = "El usuario se ha eliminado correctamente.";
+            }
+
+            return RedirectToAction(nameof(HomeAdministrador));
         }
 
         private bool UserExists(string id)

@@ -1,0 +1,58 @@
+﻿@model ProyectoVeterinariaG8.DAL.ApplicationUser
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Usuario</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PrimerApellido)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PrimerApellido)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SegundoApellido)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SegundoApellido)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaUltimaConexion)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FechaUltimaConexion)
+        </dd>
+        @{
+            var roles = ViewBag.Roles as List<string>;
+            if (roles != null && roles.Any())
+            {
+                <dt class="col-sm-2">Roles</dt>
+                <dd class="col-sm-10">
+                    @foreach (var role in roles) {@role<text> </text>}
+                </dd>
+            }
+        }
+    </dl>
+</div>
+<div>
+    <a asp-action="EditUser" asp-route-id="@Model?.Id">Editar</a> |
+    <a asp-action="HomeAdministrador">Volver</a>
+</div>

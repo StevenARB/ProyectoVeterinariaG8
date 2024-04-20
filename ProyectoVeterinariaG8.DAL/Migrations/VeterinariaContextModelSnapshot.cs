@@ -69,7 +69,7 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
 
                     b.HasIndex("SegundoVeterinarioId");
 
-                    b.ToTable("Citas");
+                    b.ToTable("Citas", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoVeterinariaG8.DAL.EstadoCita", b =>
@@ -86,7 +86,7 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
 
                     b.HasKey("EstadoCitaId");
 
-                    b.ToTable("EstadosCita");
+                    b.ToTable("EstadosCita", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoVeterinariaG8.DAL.EstadoMascota", b =>
@@ -103,7 +103,7 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
 
                     b.HasKey("EstadoId");
 
-                    b.ToTable("EstadosMascotas");
+                    b.ToTable("EstadosMascotas", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoVeterinariaG8.DAL.EstadoUsuario", b =>
@@ -120,7 +120,7 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
 
                     b.HasKey("EstadoId");
 
-                    b.ToTable("EstadosUsuario");
+                    b.ToTable("EstadosUsuario", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoVeterinariaG8.DAL.Mascota", b =>
@@ -185,7 +185,7 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
 
                     b.HasIndex("UsuarioPropietarioId");
 
-                    b.ToTable("Mascotas");
+                    b.ToTable("Mascotas", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoVeterinariaG8.DAL.MascotaImagen", b =>
@@ -207,7 +207,7 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
 
                     b.HasIndex("MascotaId");
 
-                    b.ToTable("MascotasImagenes");
+                    b.ToTable("MascotasImagenes", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoVeterinariaG8.DAL.MascotaPadecimiento", b =>
@@ -230,7 +230,7 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
 
                     b.HasIndex("MascotaId");
 
-                    b.ToTable("MascotasPadecimientos");
+                    b.ToTable("MascotasPadecimientos", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoVeterinariaG8.DAL.MascotaVacuna", b =>
@@ -261,7 +261,7 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
 
                     b.HasIndex("MascotaId");
 
-                    b.ToTable("MascotasVacunas");
+                    b.ToTable("MascotasVacunas", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoVeterinariaG8.DAL.Medicamento", b =>
@@ -282,7 +282,7 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
 
                     b.HasKey("MedicamentoId");
 
-                    b.ToTable("Medicamentos");
+                    b.ToTable("Medicamentos", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoVeterinariaG8.DAL.RazaMascota", b =>
@@ -305,7 +305,7 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
 
                     b.HasIndex("TipoId");
 
-                    b.ToTable("RazasMascotas");
+                    b.ToTable("RazasMascotas", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoVeterinariaG8.DAL.Rol", b =>
@@ -322,7 +322,7 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
 
                     b.HasKey("RolId");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoVeterinariaG8.DAL.TipoMascota", b =>
@@ -340,7 +340,7 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
 
                     b.HasKey("TipoId");
 
-                    b.ToTable("TiposMascotas");
+                    b.ToTable("TiposMascotas", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoVeterinariaG8.DAL.Usuario", b =>
@@ -382,7 +382,7 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
 
                     b.HasIndex("RolId");
 
-                    b.ToTable("Usuarios");
+                    b.ToTable("Usuarios", (string)null);
                 });
 
             modelBuilder.Entity("ProyectoVeterinariaG8.DAL.Cita", b =>

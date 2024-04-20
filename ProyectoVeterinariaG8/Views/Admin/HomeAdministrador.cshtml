@@ -5,23 +5,44 @@
 <hr />
 <div>
     <h4>Control de Usuarios</h4>
-
     <a class=" btn btn-info text-white" asp-area="" asp-controller="Admin" asp-action="CreateUser">Crear un Usuario</a>
 </div>
 <hr />
 
 <div class="row">
+    @if (TempData["UserPasswordUpdatedMessage"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["UserPasswordUpdatedMessage"]
+        </div>
+    }
+
+    @if (TempData["UserUpdatedMessage"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["UserUpdatedMessage"]
+        </div>
+    }
+
+    @if (TempData["UserDeleted"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["UserDeleted"]
+        </div>
+    }
     @foreach (var usuarios in ViewBag._usuarios)
     {
         <div class="col-sm-4">
             <div class="card mb-3">
                 <div class="card-body">
-                    <h5 class="card-title"><strong>Nombre:  </strong> @usuarios.Nombre, @usuarios.PrimerApellido, @usuarios.SegundoApellido</h5>
-                    <p class="card-text"><strong>Correo: </strong> @usuarios.Email</p>
+                    <h5 class="card-title"><strong>Email:  </strong> @usuarios.Email</h5>
+                    <p class="card-text"><strong>Nombre: </strong> @usuarios.Nombre</p>
+                    <p class="card-text"><strong>Primer Apellido: </strong> @usuarios.PrimerApellido</p>
+                    <p class="card-text"><strong>Segundo Apellido: </strong> @usuarios.SegundoApellido</p>
                     <p class="card-text"><strong>Numero: </strong> @usuarios.PhoneNumber</p>
                     <a href="@Url.Action("EditUser","Admin", new { id = usuarios.Id})" class="btn btn-primary">Editar</a>
-                    <a href="@Url.Action("DeleteUser","Medicamentos", new { id = usuarios.Id})" class="btn btn-primary">Eliminar</a>
-                    <a href="@Url.Action("DetailsUser","Medicamentos", new { id = usuarios.Id})" class="btn btn-primary">Detalles</a>
+                    <a href="@Url.Action("DeleteUser","Admin", new { id = usuarios.Id})" class="btn btn-primary">Eliminar</a>
+                    <a href="@Url.Action("DetailsUser","Admin", new { id = usuarios.Id})" class="btn btn-primary">Detalles</a>
                 </div>
             </div>
         </div>
@@ -32,7 +53,6 @@
 
 <div>
     <h4>Control de tipos de mascotas</h4>
-
     <a class=" btn btn-info text-white" asp-area="" asp-controller="TipoMascotas" asp-action="Create">Crear un tipo de Mascota</a>
 </div>
 
@@ -59,7 +79,6 @@
 
 <div>
     <h4>Control de Razas</h4>
-
     <a class=" btn btn-info text-white" asp-area="" asp-controller="RazaMascotas" asp-action="Create">Crear una raza</a>
 </div>
 
