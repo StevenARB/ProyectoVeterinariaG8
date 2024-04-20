@@ -26,6 +26,7 @@ namespace ProyectoVeterinariaG8.Controllers
         }
 
         [Authorize(Roles = "Veterinario")]
+        [Authorize(Roles = "Administrador")]
         public ActionResult HomeVeterinario()
         {
             var fechaActual = DateTime.Now;
@@ -46,6 +47,7 @@ namespace ProyectoVeterinariaG8.Controllers
         }
 
         [Authorize(Roles = "Cliente")]
+        [Authorize(Roles = "Administrador")]
         public ActionResult HomeCliente()
         {
             var fechaActual = DateTime.Now;
@@ -65,6 +67,21 @@ namespace ProyectoVeterinariaG8.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Administrador")]
+        public ActionResult HomeAdministrador ()
+        {
+            var tipoMascotas = _context.TiposMascotas.ToList();
+            ViewBag.tipoMascotas = tipoMascotas;
+
+            var razasMascotas = _context.RazasMascotas.ToList();
+            ViewBag.razasMascotas = razasMascotas;
+
+            var medicamentos = _context.Medicamentos.ToList();
+            ViewBag.medicamentos = medicamentos;
+
+
+            return View();      
+        }
 
         public IActionResult Privacy()
         {

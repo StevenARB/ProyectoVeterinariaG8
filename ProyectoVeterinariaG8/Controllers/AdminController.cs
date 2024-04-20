@@ -11,21 +11,45 @@ namespace ProyectoVeterinariaG8.Controllers
 {
     public class AdminController : Controller
     {
-        private readonly AuthContext _authContext;
         private readonly VeterinariaContext _veterinariaContext;
+        private readonly AuthContext _authContext;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IUserStore<ApplicationUser> _userStore;
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
 
-        public AdminController(AuthContext authContext, VeterinariaContext veterinariaContext, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IUserStore<ApplicationUser> userStore)
+        public AdminController(VeterinariaContext veterinariaContext, AuthContext authContext, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IUserStore<ApplicationUser> userStore)
         {
-            _authContext = authContext;
             _veterinariaContext = veterinariaContext;
+            _authContext = authContext;
             _userManager = userManager;
             _roleManager = roleManager;
             _userStore = userStore;
             _emailStore = (IUserEmailStore<ApplicationUser>)_userStore;
+        }
+
+        [Authorize(Roles = "Administrador")]
+        public async Task<ActionResult> HomeAdministrador()
+        {
+            var tipoMascotas = await _veterinariaContext.TiposMascotas.ToListAsync();
+            ViewBag.tipoMascotas = tipoMascotas;
+
+            var razasMascotas = await _veterinariaContext.RazasMascotas.ToListAsync();
+            ViewBag.razasMascotas = razasMascotas;
+
+            var medicamentos = await _veterinariaContext.Medicamentos.ToListAsync();
+            ViewBag.medicamentos = medicamentos;
+
+            var usuarios = await _userManager.Users.ToListAsync();
+            ViewBag._usuarios = usuarios;
+
+            var usuario = await _userManager.GetUserAsync(User);
+            if (usuario !=null)
+            {
+                var UserId = usuario.Id;
+            }
+
+            return View();
         }
 
         public IActionResult Index()
