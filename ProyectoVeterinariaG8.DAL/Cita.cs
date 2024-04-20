@@ -24,14 +24,12 @@ namespace ProyectoVeterinariaG8.DAL
         public DateTime FechayHora { get; set; }
 
         [Required]
-        [ForeignKey(nameof(PrimerVeterinario))]
         [DisplayName("Código Veterinario 1")]
-        public int PrimerVeterinarioId { get; set; }
+        public string PrimerVeterinarioId { get; set; }
 
         [Required]
-        [ForeignKey(nameof(SegundoVeterinario))]
         [DisplayName("Código Veterinario 2")]
-        public int SegundoVeterinarioId { get; set; }
+        public string SegundoVeterinarioId { get; set; }
 
         [Required]
         [DisplayName("Descripción")]
@@ -53,11 +51,11 @@ namespace ProyectoVeterinariaG8.DAL
         public Mascota? Mascota { get; set; }
 
         [DisplayName("Veterinario Principal")]
-        public Usuario? PrimerVeterinario { get; set; }
+        public ApplicationUser? PrimerVeterinario { get; set; }
 
         [DisplayName("Veterinario Secundario")]
 
-        public Usuario? SegundoVeterinario { get; set; }
+        public ApplicationUser? SegundoVeterinario { get; set; }
 
         public Medicamento? Medicamento { get; set; }
 

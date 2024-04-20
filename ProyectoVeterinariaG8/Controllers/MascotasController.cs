@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,12 @@ namespace ProyectoVeterinariaG8.Controllers
     public class MascotasController : Controller
     {
         private readonly VeterinariaContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public MascotasController(VeterinariaContext context)
+        public MascotasController(VeterinariaContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Mascotas
@@ -54,6 +57,9 @@ namespace ProyectoVeterinariaG8.Controllers
         {
             ViewData["TiposRazas"] = _context.TiposMascotas.Include(tipo => tipo.RazasMascota).ToList();
             ViewData["EstadoId"] = new SelectList(_context.EstadosMascotas, "EstadoId", "Descripcion");
+            ViewData["UsuariosPropietario"] = new SelectList(_userManager.Users, "Id", "Email");
+            ViewData["UsuariosCreacion"] = new SelectList(_userManager.Users, "Id", "Email");
+            ViewData["UsuariosModificacion"] = new SelectList(_userManager.Users, "Id", "Email");
             return View();
         }
 
@@ -92,6 +98,9 @@ namespace ProyectoVeterinariaG8.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EstadoId"] = new SelectList(_context.EstadosMascotas, "EstadoId", "Descripcion", mascota.EstadoId);
+            ViewData["UsuariosPropietario"] = new SelectList(_userManager.Users, "Id", "Email", mascota.UsuarioPropietarioId);
+            ViewData["UsuariosCreacion"] = new SelectList(_userManager.Users, "Id", "Email", mascota.UsuarioCreacionId);
+            ViewData["UsuariosModificacion"] = new SelectList(_userManager.Users, "Id", "Email", mascota.UsuarioModificacionId);
             return View(mascota);
         }
 
@@ -109,7 +118,10 @@ namespace ProyectoVeterinariaG8.Controllers
                 return NotFound();
             }
             ViewData["TiposRazas"] = _context.TiposMascotas.Include(tipo => tipo.RazasMascota).ToList();
-            ViewData["EstadoId"] = new SelectList(_context.EstadosMascotas, "EstadoId", "Descripcion");
+            ViewData["EstadoId"] = new SelectList(_context.EstadosMascotas, "EstadoId", "Descripcion", mascota.EstadoId);
+            ViewData["UsuariosPropietario"] = new SelectList(_userManager.Users, "Id", "Email", mascota.UsuarioPropietarioId);
+            ViewData["UsuariosCreacion"] = new SelectList(_userManager.Users, "Id", "Email", mascota.UsuarioCreacionId);
+            ViewData["UsuariosModificacion"] = new SelectList(_userManager.Users, "Id", "Email", mascota.UsuarioModificacionId);
             return View(mascota);
         }
 
@@ -148,6 +160,9 @@ namespace ProyectoVeterinariaG8.Controllers
             }
             ViewData["TiposRazas"] = _context.TiposMascotas.Include(tipo => tipo.RazasMascota).ToList();
             ViewData["EstadoId"] = new SelectList(_context.EstadosMascotas, "EstadoId", "Descripcion", mascota.EstadoId);
+            ViewData["UsuariosPropietario"] = new SelectList(_userManager.Users, "Id", "Email", mascota.UsuarioPropietarioId);
+            ViewData["UsuariosCreacion"] = new SelectList(_userManager.Users, "Id", "Email", mascota.UsuarioCreacionId);
+            ViewData["UsuariosModificacion"] = new SelectList(_userManager.Users, "Id", "Email", mascota.UsuarioModificacionId);
             return View(mascota);
         }
 
