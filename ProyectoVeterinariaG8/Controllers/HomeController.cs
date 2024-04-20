@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProyectoVeterinariaG8.DAL;
@@ -23,7 +24,9 @@ namespace ProyectoVeterinariaG8.Controllers
         {
             return View();
         }
-        
+
+        [Authorize(Roles = "Veterinario")]
+        [Authorize(Roles = "Administrador")]
         public ActionResult HomeVeterinario()
         {
             var fechaActual = DateTime.Now;
@@ -43,6 +46,42 @@ namespace ProyectoVeterinariaG8.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Cliente")]
+        [Authorize(Roles = "Administrador")]
+        public ActionResult HomeCliente()
+        {
+            var fechaActual = DateTime.Now;
+            var citas = _context.Citas
+                .Include(c => c.EstadoCita)
+                .Include(c => c.Mascota)
+                .Include(c => c.Medicamento)
+                .Include(c => c.PrimerVeterinario)
+                .Include(c => c.SegundoVeterinario);
+
+            var citasPasadas = citas.Where(c => c.FechayHora < fechaActual).ToList();
+            var citasFuturas = citas.Where(c => c.FechayHora > fechaActual).ToList();
+
+            ViewBag.Historial = citasPasadas;
+            ViewBag.Proximas = citasFuturas;
+
+            return View();
+        }
+
+        [Authorize(Roles = "Administrador")]
+        public ActionResult HomeAdministrador ()
+        {
+            var tipoMascotas = _context.TiposMascotas.ToList();
+            ViewBag.tipoMascotas = tipoMascotas;
+
+            var razasMascotas = _context.RazasMascotas.ToList();
+            ViewBag.razasMascotas = razasMascotas;
+
+            var medicamentos = _context.Medicamentos.ToList();
+            ViewBag.medicamentos = medicamentos;
+
+
+            return View();      
+        }
 
         public IActionResult Privacy()
         {

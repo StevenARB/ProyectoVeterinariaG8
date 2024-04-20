@@ -1,0 +1,50 @@
+﻿@model AdminCreateUserViewModel
+@{
+    ViewData["Title"] = "Crear Usuario";
+}
+
+<h1 style="text-align: center">@ViewData["Title"]</h1>
+
+<div class="row justify-content-md-center mt-5">
+    <div class="col-md-4">
+        <form id="registerForm" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-floating">
+                <input asp-for="Nombre" class="form-control" aria-required="true" />
+                <label asp-for="Nombre"></label>
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="PrimerApellido" class="form-control" aria-required="true" />
+                <label asp-for="PrimerApellido"></label>
+                <span asp-validation-for="PrimerApellido" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="SegundoApellido" class="form-control" aria-required="true" />
+                <label asp-for="SegundoApellido"></label>
+                <span asp-validation-for="SegundoApellido" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Email" class="form-control" autocomplete="username" aria-required="true" />
+                <label asp-for="Email"></label>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Password" class="form-control" autocomplete="new-password" aria-required="true" />
+                <label asp-for="Password"></label>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
+                <label asp-for="ConfirmPassword"></label>
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <select asp-for="IdRol" asp-items="ViewBag.Roles" class="form-control"></select>
+                <label asp-for="IdRol"></label>
+                <span asp-validation-for="IdRol" class="text-danger"></span>
+            </div>
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary mt-5">Crear</button>
+        </form>
+    </div>
+</div>

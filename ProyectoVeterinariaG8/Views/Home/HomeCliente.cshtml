@@ -3,14 +3,13 @@
 }
 <div>
     <a class=" btn btn-info text-white" asp-area="" asp-controller="Mascotas" asp-action="Index">Mascotas</a>
-
-    <a class="btn btn-success text-white" asp-area="" asp-controller="Citas" asp-action="Create">Nueva Cita</a>
-
 </div>
+
 <hr />
 <h2>Asignacion de citas</h2>
 <hr />
-<h3>Citas Proximas</h3>
+<h3>Proximas citas</h3>
+
 <div class="row">
     @foreach (var citas in ViewBag.Proximas)
     {
@@ -19,8 +18,7 @@
                 <div class="card-body">
                     <h5 class="card-title"><strong>Fecha y Hora: </strong> @citas.FechayHora</h5>
                     <p class="card-text"><strong>Descripcion: </strong> @citas.DescripcionCita</p>
-                    <a href="@Url.Action("Details","Citas", new { id = citas.CitaId })" class="btn btn-primary">Detalles de la cita</a>
-                    <a href="@Url.Action("Edit","Citas", new { id = citas.CitaId })" class="btn btn-secondary">Editar Cita</a>
+                    <a href="@Url.Action("Details","Citas", new { id = citas.CitaId })" class="btn btn-primary">Ver detalle</a>
                 </div>
             </div>
         </div>
@@ -37,8 +35,7 @@
                 <div class="card-body">
                     <h5 class="card-title"><strong>Fecha y Hora: </strong> @citas.FechayHora</h5>
                     <p class="card-text"><strong>Descripcion: </strong> @citas.DescripcionCita</p>
-                    <a href="@Url.Action("Details","Citas", new { id = citas.CitaId })" class="btn btn-primary">Detalles de la cita</a>
-                    <a href="@Url.Action("Edit","Citas", new { id = citas.CitaId })" class="btn btn-secondary">Editar Cita</a>
+                    <a href="@Url.Action("Details","Citas", new { id = citas.CitaId })" class="btn btn-primary">Ver detalle</a>
                 </div>
             </div>
         </div>
