@@ -1,7 +1,7 @@
 ﻿@model ProyectoVeterinariaG8.DAL.ApplicationUser
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles Usuario";
 }
 
 <h1>Detalles</h1>
@@ -53,6 +53,6 @@
     </dl>
 </div>
 <div>
-    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("EditUser", "Admin", new { id = Model?.Id })'">Editar</button> |
-    <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("HomeAdministrador", "Admin")'">Volver</button>
+    <a asp-action="EditUser" asp-route-id="@Model?.Id" class="btn btn-warning">Editar</a> |
+    <a asp-action="HomeAdministrador" class="btn btn-secondary">Volver</a>
 </div>
