@@ -54,3 +54,27 @@ INSERT INTO [dbo].[EstadosUsuario]
      VALUES
            ('Inactivo')
 GO
+
+INSERT INTO [dbo].[EstadosCita]
+           ([DescripcionCita])
+     VALUES
+           ('Agendada')
+GO
+
+INSERT INTO [dbo].[EstadosCita]
+           ([DescripcionCita])
+     VALUES
+           ('Cancelada')
+GO
+
+INSERT INTO [dbo].[EstadosCita]
+           ([DescripcionCita])
+     VALUES
+           ('En Curso')
+GO
+
+INSERT INTO [dbo].[EstadosCita]
+           ([DescripcionCita])
+     VALUES
+           ('Finalizada')
+GO

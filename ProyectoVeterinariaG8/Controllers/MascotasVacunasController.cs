@@ -47,7 +47,8 @@ namespace ProyectoVeterinariaG8.Controllers
         // GET: MascotasVacunas/Create
         public IActionResult Create()
         {
-            ViewData["MascotaId"] = new SelectList(_context.Mascotas, "MascotaId", "Nombre");
+            var _contextMascotas = _context.Mascotas.Include(m => m.EstadoMascota).Where(m => m.EstadoMascota.Descripcion == "Activo");
+            ViewData["MascotaId"] = new SelectList(_contextMascotas, "MascotaId", "MascotaId");
             return View();
         }
 
@@ -64,7 +65,8 @@ namespace ProyectoVeterinariaG8.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MascotaId"] = new SelectList(_context.Mascotas, "MascotaId", "Nombre", mascotaVacuna.MascotaId);
+            var _contextMascotas = _context.Mascotas.Include(m => m.EstadoMascota).Where(m => m.EstadoMascota.Descripcion == "Activo");
+            ViewData["MascotaId"] = new SelectList(_contextMascotas, "MascotaId", "MascotaId", mascotaVacuna.MascotaId);
             return View(mascotaVacuna);
         }
 
@@ -81,7 +83,8 @@ namespace ProyectoVeterinariaG8.Controllers
             {
                 return NotFound();
             }
-            ViewData["MascotaId"] = new SelectList(_context.Mascotas, "MascotaId", "Nombre", mascotaVacuna.MascotaId);
+            var _contextMascotas = _context.Mascotas.Include(m => m.EstadoMascota).Where(m => m.EstadoMascota.Descripcion == "Activo");
+            ViewData["MascotaId"] = new SelectList(_contextMascotas, "MascotaId", "MascotaId", mascotaVacuna.MascotaId);
             return View(mascotaVacuna);
         }
 
@@ -117,7 +120,8 @@ namespace ProyectoVeterinariaG8.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MascotaId"] = new SelectList(_context.Mascotas, "MascotaId", "Nombre", mascotaVacuna.MascotaId);
+            var _contextMascotas = _context.Mascotas.Include(m => m.EstadoMascota).Where(m => m.EstadoMascota.Descripcion == "Activo");
+            ViewData["MascotaId"] = new SelectList(_contextMascotas, "MascotaId", "MascotaId", mascotaVacuna.MascotaId);
             return View(mascotaVacuna);
         }
 

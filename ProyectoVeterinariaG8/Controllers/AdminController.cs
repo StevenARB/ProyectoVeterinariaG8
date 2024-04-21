@@ -43,7 +43,7 @@ namespace ProyectoVeterinariaG8.Controllers
             var medicamentos = await _veterinariaContext.Medicamentos.ToListAsync();
             ViewBag.medicamentos = medicamentos;
 
-            var usuarios = await _userManager.Users.ToListAsync();
+            var usuarios = await _userManager.Users.Where(u => u.EstadoUsuario.Descripcion == "Activo").ToListAsync();
             ViewBag._usuarios = usuarios;
 
             return View();
@@ -117,7 +117,7 @@ namespace ProyectoVeterinariaG8.Controllers
                     var roleResult = await _userManager.AddToRoleAsync(user, normalizedNameRole);
                     var userId = await _userManager.GetUserIdAsync(user);
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("HomeAdministrador", "Admin");
                 }
             }
             ViewData["Estados"] = new SelectList(_veterinariaContext.EstadosUsuario, "EstadoId", "Descripcion");
@@ -138,6 +138,9 @@ namespace ProyectoVeterinariaG8.Controllers
                 return NotFound();
             }
 
+            var rolesUser = await _userManager.GetRolesAsync(user);
+            var roleId = _roleManager.Roles.FirstOrDefault(r => r.NormalizedName == rolesUser.FirstOrDefault())?.Id;
+
             var model = new AdminEditUserViewModel
             {
                 Id = user.Id,
@@ -146,11 +149,12 @@ namespace ProyectoVeterinariaG8.Controllers
                 PrimerApellido = user.PrimerApellido,
                 SegundoApellido = user.SegundoApellido,
                 Imagen = user.Imagen,
-                EstadoUsuarioId = user.EstadoUsuarioId
+                EstadoUsuarioId = user.EstadoUsuarioId,
+                IdRol = roleId
             };
 
-            ViewData["Estados"] = new SelectList(_veterinariaContext.EstadosUsuario, "EstadoId", "Descripcion");
-            ViewData["Roles"] = new SelectList(_roleManager.Roles, "Id", "NormalizedName");
+            ViewData["Estados"] = new SelectList(_veterinariaContext.EstadosUsuario, "EstadoId", "Descripcion", model.EstadoUsuarioId);
+            ViewData["Roles"] = new SelectList(_roleManager.Roles, "Id", "NormalizedName", model.IdRol);
             return View(model);
         }
 
@@ -175,13 +179,17 @@ namespace ProyectoVeterinariaG8.Controllers
                 user.Imagen = model.Imagen;
                 user.EstadoUsuarioId = model.EstadoUsuarioId;
 
-                if (model.Password != null && model.Password == model.ConfirmPassword)
+                if (model.OldPassword != null && model.Password == model.ConfirmPassword)
                 {
                     var changePassword = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.Password);
 
                     if (changePassword.Succeeded)
                     {
                         TempData["UserPasswordUpdatedMessage"] = "La contraseña se ha actualizado correctamente.";
+                    }
+                    else 
+                    {
+                        TempData["UserPasswordUpdatedMessageError"] = "La contraseña no se pudo actualizar.";
                     }
                 }
 
@@ -190,15 +198,13 @@ namespace ProyectoVeterinariaG8.Controllers
                 if (result.Succeeded)
                 {
                     TempData["UserUpdatedMessage"] = "El usuario se ha actualizado correctamente.";
-                    //return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(HomeAdministrador));
                 }
-                ViewData["Estados"] = new SelectList(_veterinariaContext.EstadosUsuario, "EstadoId", "Descripcion", model.EstadoUsuarioId);
-                ViewData["Roles"] = new SelectList(_roleManager.Roles, "Id", "NormalizedName");
             }
 
-            ViewData["Estados"] = new SelectList(_veterinariaContext.EstadosUsuario, "EstadoId", "Descripcion");
-            ViewData["Roles"] = new SelectList(_roleManager.Roles, "Id", "NormalizedName");
-            return RedirectToAction(nameof(HomeAdministrador));
+            ViewData["Estados"] = new SelectList(_veterinariaContext.EstadosUsuario, "EstadoId", "Descripcion", model.EstadoUsuarioId);
+            ViewData["Roles"] = new SelectList(_roleManager.Roles, "Id", "NormalizedName", model.IdRol);
+            return View(model);
         }
 
         [Authorize(Roles = "Administrador")]
@@ -232,12 +238,15 @@ namespace ProyectoVeterinariaG8.Controllers
             }
 
             var user = await _userManager.FindByIdAsync(id);
-            if (user == null)
+            var estadoUsuario = await _veterinariaContext.EstadosUsuario.Where(e => e.Descripcion == "Inactivo").FirstOrDefaultAsync();
+            if (user == null || estadoUsuario == null)
             {
                 return NotFound();
             }
 
-            var result = await _userManager.DeleteAsync(user);
+            user.EstadoUsuarioId = estadoUsuario.EstadoId;
+
+            var result = await _userManager.UpdateAsync(user);
             if (result.Succeeded) 
             {
                 TempData["UserDeleted"] = "El usuario se ha eliminado correctamente.";
