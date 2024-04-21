@@ -4,10 +4,9 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Detalles</h1>
 
 <div>
-    <h4>Usuario</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -50,9 +49,10 @@
                 </dd>
             }
         }
+        <hr />
     </dl>
 </div>
 <div>
-    <a asp-action="EditUser" asp-route-id="@Model?.Id">Editar</a> |
-    <a asp-action="HomeAdministrador">Volver</a>
+    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("EditUser", "Admin", new { id = Model?.Id })'">Editar</button> |
+    <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("HomeAdministrador", "Admin")'">Volver</button>
 </div>

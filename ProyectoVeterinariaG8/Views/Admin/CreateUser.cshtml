@@ -1,59 +1,63 @@
 ﻿@model AdminCreateUserViewModel
 @{
-    ViewData["Title"] = "Crear Usuario";
+    ViewData["Title"] = "Crear Nuevo Usuario";
 }
 
 <h1 style="text-align: center">@ViewData["Title"]</h1>
 
 <div class="row justify-content-md-center mt-5">
-    <div class="col-md-4">
+    <div class="col-md-4 bg-ligth">
         <form asp-action="CreateUser" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-floating">
+            <hr />
+            <br />
+            <div class="form-floating mb-3">
                 <input asp-for="Nombre" class="form-control" aria-required="true" />
                 <label asp-for="Nombre"></label>
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
-            <div class="form-floating">
+            <div class="form-floating mb-3">
                 <input asp-for="PrimerApellido" class="form-control" aria-required="true" />
                 <label asp-for="PrimerApellido"></label>
                 <span asp-validation-for="PrimerApellido" class="text-danger"></span>
             </div>
-            <div class="form-floating">
+            <div class="form-floating mb-3">
                 <input asp-for="SegundoApellido" class="form-control" aria-required="true" />
                 <label asp-for="SegundoApellido"></label>
                 <span asp-validation-for="SegundoApellido" class="text-danger"></span>
             </div>
-            <div class="form-floating">
+            <div class="form-floating mb-3">
                 <input asp-for="Email" class="form-control" autocomplete="username" aria-required="true" />
                 <label asp-for="Email"></label>
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            <div class="form-floating">
+            <div class="form-floating mb-3">
                 <input asp-for="Password" class="form-control" autocomplete="new-password" aria-required="true" />
                 <label asp-for="Password"></label>
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
-            <div class="form-floating">
+            <div class="form-floating mb-3">
                 <input asp-for="ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
                 <label asp-for="ConfirmPassword"></label>
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
-            <div class="form-floating">
+            <div class="form-floating mb-3">
                 <select asp-for="EstadoUsuarioId" asp-items="ViewBag.Estados" class="form-control"></select>
                 <label asp-for="EstadoUsuarioId"></label>
                 <span asp-validation-for="EstadoUsuarioId" class="text-danger"></span>
             </div>
-            <div class="form-floating">
+            <div class="form-floating mb-3">
                 <select asp-for="IdRol" asp-items="ViewBag.Roles" class="form-control"></select>
                 <label asp-for="IdRol"></label>
                 <span asp-validation-for="IdRol" class="text-danger"></span>
             </div>
-            <div class="form-group mt-2">
+            <div class="form-group mt-2 mb-3">
                 <label asp-for="Imagen"></label>
                 <input asp-for="Imagen" type="file" accept="image/png" name="imagen" class="form-control" />
             </div>
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary mt-5">Crear</button>
+            <br />
+            <hr />
         </form>
     </div>
 </div>
