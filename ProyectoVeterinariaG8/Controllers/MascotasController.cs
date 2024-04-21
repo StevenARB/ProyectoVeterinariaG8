@@ -25,7 +25,7 @@ namespace ProyectoVeterinariaG8.Controllers
         // GET: Mascotas
         public async Task<IActionResult> Index()
         {
-            var veterinariaContext = _context.Mascotas.Include(m => m.RazaMascota).Include(m => m.TipoMascota).Include(m => m.EstadoMascota).Where(m => m.EstadoMascota.Descripcion == "Activo");
+            var veterinariaContext = _context.Mascotas.Include(m => m.UsuarioPropietario).Include(m => m.RazaMascota).Include(m => m.TipoMascota).Include(m => m.EstadoMascota).Where(m => m.UsuarioPropietario.EstadoUsuario.Descripcion == "Activo" && m.EstadoMascota.Descripcion == "Activo");
             return View(await veterinariaContext.ToListAsync());
         }
 
@@ -197,7 +197,7 @@ namespace ProyectoVeterinariaG8.Controllers
                 return Problem("Entity set 'VeterinariaContext.Mascotas'  is null.");
             }
             var mascota = await _context.Mascotas.FindAsync(id);
-            var estado = await _context.EstadosMascotas.FirstOrDefaultAsync(e => e.Descripcion == "Inactiva");
+            var estado = await _context.EstadosMascotas.FirstOrDefaultAsync(e => e.Descripcion == "Inactivo");
             if (mascota != null && estado != null)
             {
                 mascota.EstadoId = estado.EstadoId;

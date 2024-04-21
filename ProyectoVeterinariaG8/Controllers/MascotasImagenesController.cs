@@ -22,7 +22,11 @@ namespace ProyectoVeterinariaG8.Controllers
         // GET: MascotasImagenes
         public async Task<IActionResult> Index()
         {
-            var veterinariaContext = _context.MascotasImagenes.Include(m => m.Mascota).ThenInclude(m => m.EstadoMascota).Where(m => m.Mascota.EstadoMascota.Descripcion == "Activo");
+            var veterinariaContext = _context.MascotasImagenes
+                .Include(m => m.Mascota)
+                .ThenInclude(m => m.EstadoMascota)
+                .Where(m => m.Mascota.UsuarioPropietario.EstadoUsuario.Descripcion == "Activo" && m.Mascota.EstadoMascota.Descripcion == "Activo");
+
             return View(await veterinariaContext.ToListAsync());
         }
 
