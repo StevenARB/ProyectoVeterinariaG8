@@ -10,9 +10,9 @@
 <hr />
 <h2>Asignacion de citas</h2>
 <hr />
-<h3>Citas Proximas</h3>
+<h3>Citas Proximas Veterinario Principal</h3>
 <div class="row">
-    @foreach (var citas in ViewBag.Proximas)
+    @foreach (var citas in ViewBag.ProximasPrimero)
     {
         <div class="col-sm-4">
             <div class="card">
@@ -27,10 +27,45 @@
     }
 </div>
 <hr />
-<h3>Historial de citas</h3>
+<h3>Citas Proximas Veterinario Secundario</h3>
+<div class="row">
+    @foreach (var citas in ViewBag.ProximasSecundario)
+    {
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><strong>Fecha y Hora: </strong> @citas.FechayHora</h5>
+                    <p class="card-text"><strong>Descripcion: </strong> @citas.DescripcionCita</p>
+                    <a href="@Url.Action("Details","Citas", new { id = citas.CitaId })" class="btn btn-primary">Detalles de la cita</a>
+                    <a href="@Url.Action("Edit","Citas", new { id = citas.CitaId })" class="btn btn-secondary">Editar Cita</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<hr />
+<h3>Historial de citas Veterinario Principal</h3>
 <br />
 <div class="row">
-    @foreach (var citas in ViewBag.Historial)
+    @foreach (var citas in ViewBag.HistorialPrimero)
+    {
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><strong>Fecha y Hora: </strong> @citas.FechayHora</h5>
+                    <p class="card-text"><strong>Descripcion: </strong> @citas.DescripcionCita</p>
+                    <a href="@Url.Action("Details","Citas", new { id = citas.CitaId })" class="btn btn-primary">Detalles de la cita</a>
+                    <a href="@Url.Action("Edit","Citas", new { id = citas.CitaId })" class="btn btn-secondary">Editar Cita</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<hr />
+<h3>Historial de citas Veterinario Secundario</h3>
+<br />
+<div class="row">
+    @foreach (var citas in ViewBag.HistorialSecundario)
     {
         <div class="col-sm-4">
             <div class="card">

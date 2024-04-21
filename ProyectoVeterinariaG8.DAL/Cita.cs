@@ -12,6 +12,8 @@ namespace ProyectoVeterinariaG8.DAL
     [Table("Citas")]
     public class Cita
     {
+        public readonly string UsuarioPropietarioId;
+
         [Key]
         public int CitaId { get; set; }
 

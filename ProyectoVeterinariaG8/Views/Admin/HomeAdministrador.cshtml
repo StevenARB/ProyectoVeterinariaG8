@@ -35,11 +35,10 @@
         <div class="col-sm-4">
             <div class="card mb-3">
                 <div class="card-body">
-                    <h5 class="card-title"><strong>Email:  </strong> @usuarios.Email</h5>
-                    <p class="card-text"><strong>Nombre: </strong> @usuarios.Nombre</p>
+                    <h5 class="card-title"><strong>Nombre:  </strong> @usuarios.Nombre</h5>
                     <p class="card-text"><strong>Primer Apellido: </strong> @usuarios.PrimerApellido</p>
                     <p class="card-text"><strong>Segundo Apellido: </strong> @usuarios.SegundoApellido</p>
-                    <p class="card-text"><strong>Numero: </strong> @usuarios.PhoneNumber</p>
+                    <p class="card-text"><strong>Email: </strong> @usuarios.Email</p>
                     <a href="@Url.Action("EditUser","Admin", new { id = usuarios.Id})" class="btn btn-primary">Editar</a>
                     <a href="@Url.Action("DeleteUser","Admin", new { id = usuarios.Id})" class="btn btn-primary">Eliminar</a>
                     <a href="@Url.Action("DetailsUser","Admin", new { id = usuarios.Id})" class="btn btn-primary">Detalles</a>

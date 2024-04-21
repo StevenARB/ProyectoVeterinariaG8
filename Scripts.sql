@@ -42,3 +42,15 @@ INSERT INTO [dbo].[EstadosMascotas]
      VALUES
            ('Inactivo')
 GO
+
+INSERT INTO [dbo].[EstadosUsuario]
+           ([Descripcion])
+     VALUES
+           ('Activo')
+GO
+
+INSERT INTO [dbo].[EstadosUsuario]
+           ([Descripcion])
+     VALUES
+           ('Inactivo')
+GO

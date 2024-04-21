@@ -46,12 +46,6 @@ namespace ProyectoVeterinariaG8.Controllers
             var usuarios = await _userManager.Users.ToListAsync();
             ViewBag._usuarios = usuarios;
 
-            var usuario = await _userManager.GetUserAsync(User);
-            if (usuario != null)
-            {
-                var UserId = usuario.Id;
-            }
-
             return View();
         }
 
