@@ -4,10 +4,9 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Detalles sobre la Cita</h1>
 
 <div>
-    <h4>Cita</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -59,8 +58,9 @@
             @Html.DisplayFor(model => model.EstadoCita.DescripcionCita)
         </dd>
     </dl>
+    <hr />
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.CitaId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.CitaId" class="btn btn-success">Editar</a> |
+    <a asp-action="Index" class="btn btn-secondary">Volver</a>
 </div>

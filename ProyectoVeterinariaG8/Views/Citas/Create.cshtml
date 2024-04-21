@@ -4,77 +4,72 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>Cita</h4>
+<h1>Crear una Cita</h1>
 <hr />
-<div class="container">
+<div class="container bg-light">
     <div class="row justify-content-center">
         <div class="col-lg-6">
             <form asp-action="Create">
+                <br />
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label asp-for="MascotaId" class="control-label">Mascota</label>
-                    <select asp-for="MascotaId" class="form-control" asp-items="ViewBag.MascotaId"></select>>
-                    <option value="">Selecciona una mascota</option>
+                    <select asp-for="MascotaId" class="form-control" asp-items="ViewBag.MascotaId"></select>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label asp-for="FechayHora" class="control-label">Fecha y Hora</label>
                     <input asp-for="FechayHora" class="form-control" />
                     <span asp-validation-for="FechayHora" class="text-danger"></span>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label asp-for="PrimerVeterinarioId" class="control-label">Primer Veterinario</label>
-                    <select asp-for="PrimerVeterinarioId" class="form-control" asp-items="ViewBag.PrimerVeterinarioId"></select>>
-                    <option value="">Selecciona un primer veterinario</option>
+                    <select asp-for="PrimerVeterinarioId" class="form-control" asp-items="ViewBag.PrimerVeterinarioId"></select>
                     <span asp-validation-for="PrimerVeterinarioId" class="text-danger"></span>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label asp-for="SegundoVeterinarioId" class="control-label">Segundo Veterinario</label>
-                    <select asp-for="SegundoVeterinarioId" class="form-control" asp-items="ViewBag.SegundoVeterinarioId"></select>>
-                    <option value="">Selecciona un segundo veterinario</option>
+                    <select asp-for="SegundoVeterinarioId" class="form-control" asp-items="ViewBag.SegundoVeterinarioId"></select>
                     <span asp-validation-for="SegundoVeterinarioId" class="text-danger"></span>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label asp-for="DescripcionCita" class="control-label">Descripción de la cita</label>
                     <input asp-for="DescripcionCita" class="form-control" />
                     <span asp-validation-for="DescripcionCita" class="text-danger"></span>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label asp-for="DiagnosticoCita" class="control-label">Diagnóstico de la cita</label>
                     <input asp-for="DiagnosticoCita" class="form-control" />
                     <span asp-validation-for="DiagnosticoCita" class="text-danger"></span>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label asp-for="MedicamentoId" class="control-label">Medicamento</label>
-                    <select asp-for="MedicamentoId" class="form-control" asp-items="ViewBag.MedicamentoId"></select>>
-                    <option value="">Selecciona un medicamento</option>
+                    <select asp-for="MedicamentoId" class="form-control" asp-items="ViewBag.MedicamentoId"></select>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label asp-for="EstadoCitaId" class="control-label">Estado de la cita</label>
-                    <select asp-for="EstadoCitaId" class="form-control" asp-items="ViewBag.EstadoCitaId"></select>>
-                    <option value="">Selecciona un estado de la cita</option>
+                    <select asp-for="EstadoCitaId" class="form-control" asp-items="ViewBag.EstadoCitaId"></select>
                 </div>
-
+                <br />
                 <div class="form-group">
                     <button type="submit" class="btn btn-lg btn-success btn-block">Crear</button>
+                    <a asp-action="Index" class="btn btn-lg btn-secondary justify-content-center">Volver</a>
+
                 </div>
+                <br />
             </form>
         </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{
