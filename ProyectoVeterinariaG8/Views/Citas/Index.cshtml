@@ -39,14 +39,14 @@
                     <td>@Html.DisplayFor(modelItem => item.Medicamento.Nombre)</td>
                     <td>@Html.DisplayFor(modelItem => item.EstadoCita.DescripcionCita)</td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.CitaId" class="btn btn-outline-primary btn-sm">Edit</a>
-                        <a asp-action="Details" asp-route-id="@item.CitaId" class="btn btn-outline-secondary btn-sm">Details</a>
+                        <a asp-action="Edit" asp-route-id="@item.CitaId" class="btn btn-outline-primary btn-sm">Editar</a>
+                        <a asp-action="Details" asp-route-id="@item.CitaId" class="btn btn-outline-secondary btn-sm">Detalles</a>
                         @{
                             var identidad = User.Identity as ClaimsIdentity;
                             var roles = identidad.Claims.Where(c => c.Type == ClaimTypes.Role).ToList();
                             if (roles.Select(r => r.Value).Contains("Administrador"))
                             {
-                                <a asp-action="Delete" asp-route-id="@item.CitaId" class="btn btn-outline-danger btn-sm">Delete</a>
+                                <a asp-action="Delete" asp-route-id="@item.CitaId" class="btn btn-outline-danger btn-sm">Eliminar</a>
                             }
                         }
                     </td>

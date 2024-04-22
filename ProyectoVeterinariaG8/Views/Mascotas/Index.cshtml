@@ -83,9 +83,9 @@
                 @Html.DisplayFor(modelItem => item.UsuarioPropietarioId)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.MascotaId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MascotaId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MascotaId">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.MascotaId" class="btn btn-outline-primary btn-sm">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.MascotaId" class="btn btn-outline-secondary btn-sm">Detalles</a> |
+                    <a asp-action="Delete" asp-route-id="@item.MascotaId" class="btn btn-outline-danger btn-sm">Eliminar</a>
             </td>
         </tr>
 }
