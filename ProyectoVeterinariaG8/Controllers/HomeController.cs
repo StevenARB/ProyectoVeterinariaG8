@@ -31,11 +31,27 @@ namespace ProyectoVeterinariaG8.Controllers
         [Authorize(Roles = "Veterinario,Administrador")]
         public async Task<ActionResult> HomeVeterinarioAsync()
         {
-            var fechaActual = DateTime.Now;
-
             String usuarioId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (usuarioId != null)
             {
+
+                var fechaActual = DateTime.Now;
+                var fechaLimite = fechaActual.AddHours(1);
+
+                var citasEnCurso = await _context.Citas
+                    .Where(c => c.FechayHora <= fechaActual && c.FechayHora <= fechaLimite && c.EstadoCita.DescripcionCita == "Agendada")
+                    .ToListAsync();
+
+                var estadoEnCurso = await _context.EstadosCita
+                    .Where(e => e.DescripcionCita == "En Curso")
+                    .FirstOrDefaultAsync();
+
+                foreach (var cita in citasEnCurso)
+                {
+                    cita.EstadoCitaId = estadoEnCurso.EstadoCitaId;
+                }
+
+                await _context.SaveChangesAsync();
 
                 var citas = await _context.Citas
                     .Include(c => c.EstadoCita)
@@ -64,11 +80,27 @@ namespace ProyectoVeterinariaG8.Controllers
         [Authorize(Roles = "Cliente,Administrador")]
         public async Task<ActionResult> HomeClienteAsync()
         {
-
             String usuarioId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (usuarioId != null)
             {
-                // Obtiene las citas relacionadas con el usuario logueado
+                var fechaActual = DateTime.Now;
+                var fechaLimite = fechaActual.AddHours(1);
+
+                var citasEnCurso = await _context.Citas
+                    .Where(c => c.FechayHora <= fechaActual && c.FechayHora <= fechaLimite && c.EstadoCita.DescripcionCita == "Agendada")
+                    .ToListAsync();
+
+                var estadoEnCurso = await _context.EstadosCita
+                    .Where(e => e.DescripcionCita == "En Curso")
+                    .FirstOrDefaultAsync();
+
+                foreach (var cita in citasEnCurso)
+                {
+                    cita.EstadoCitaId = estadoEnCurso.EstadoCitaId;
+                }
+
+                await _context.SaveChangesAsync();
+
                 var citas = await _context.Citas
                     .Include(c => c.EstadoCita)
                     .Include(c => c.Mascota)
@@ -79,7 +111,6 @@ namespace ProyectoVeterinariaG8.Controllers
                     .ToListAsync();
 
                 // Separa las citas pasadas y futuras
-                var fechaActual = DateTime.Now;
                 var citasPasadasMascota = citas.Where(c => c.FechayHora < fechaActual).ToList();
                 var citasProximasMascota = citas.Where(c => c.FechayHora > fechaActual).ToList();
 

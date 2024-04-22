@@ -62,7 +62,6 @@ namespace ProyectoVeterinariaG8.DAL
         public Medicamento? Medicamento { get; set; }
 
         [DisplayName("Estado")]
-
         public EstadoCita? EstadoCita { get; set; }
 
     }
