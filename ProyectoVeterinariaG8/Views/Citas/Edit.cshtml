@@ -4,64 +4,62 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
-<h4>Cita</h4>
+<h1 style="text-align: center">Editar Cita</h1>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="row justify-content-md-center mt-5 bg-light">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="CitaId" />
-            <div class="form-group">
+            <br />
+            <div class="form-group mb-3">
                 <label asp-for="MascotaId" class="control-label"></label>
                 <select asp-for="MascotaId" class="form-control" asp-items="ViewBag.MascotaId"></select>
                 <span asp-validation-for="MascotaId" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="FechayHora" class="control-label"></label>
                 <input asp-for="FechayHora" class="form-control" />
                 <span asp-validation-for="FechayHora" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="PrimerVeterinarioId" class="control-label"></label>
                 <select asp-for="PrimerVeterinarioId" class="form-control" asp-items="ViewBag.PrimerVeterinario"></select>
                 <span asp-validation-for="PrimerVeterinarioId" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="SegundoVeterinarioId" class="control-label"></label>
                 <select asp-for="SegundoVeterinarioId" class="form-control" asp-items="ViewBag.SegundoVeterinario"></select>
                 <span asp-validation-for="SegundoVeterinarioId" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="DescripcionCita" class="control-label"></label>
                 <input asp-for="DescripcionCita" class="form-control" />
                 <span asp-validation-for="DescripcionCita" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="DiagnosticoCita" class="control-label"></label>
                 <input asp-for="DiagnosticoCita" class="form-control" />
                 <span asp-validation-for="DiagnosticoCita" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="MedicamentoId" class="control-label"></label>
                 <select asp-for="MedicamentoId" class="form-control" asp-items="ViewBag.MedicamentoId"></select>
                 <span asp-validation-for="MedicamentoId" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label asp-for="EstadoCitaId" class="control-label"></label>
                 <select asp-for="EstadoCitaId" class="form-control" asp-items="ViewBag.EstadoCitaId"></select>
                 <span asp-validation-for="EstadoCitaId" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+                <a asp-action="Index" class=" btn btn-secondary">Volver</a>
             </div>
+            <br />
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

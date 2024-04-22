@@ -258,7 +258,7 @@ namespace ProyectoVeterinariaG8.DAL.Migrations.Auth
 
                     b.HasKey("EstadoId");
 
-                    b.ToTable("EstadosUsuario");
+                    b.ToTable("EstadosUsuario", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

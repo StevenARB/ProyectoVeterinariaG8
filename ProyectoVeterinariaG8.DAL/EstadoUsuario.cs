@@ -19,5 +19,7 @@ namespace ProyectoVeterinariaG8.DAL
         [Required]
         [DisplayName("Descripción")]
         public string Descripcion { get; set; }
+
+        public ICollection<ApplicationUser> Usuarios { get; set; } = new List<ApplicationUser>();
     }
 }

@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<ProyectoVeterinariaG8.DAL.MascotaVacuna>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Vacunas";
 }
 
-<h1>Index</h1>
+<h1>Vacunas</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Agregar Vacuna</a>
 </p>
 <table class="table">
     <thead>
@@ -43,9 +43,9 @@
                 @Html.DisplayFor(modelItem => item.Mascota.Nombre)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.VacunaId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.VacunaId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.VacunaId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.VacunaId" class="btn btn-outline-warning">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.VacunaId" class="btn btn-outline-secondary">Detalle</a> |
+                <a asp-action="Delete" asp-route-id="@item.VacunaId" class="btn btn-outline-danger">Eliminar</a>
             </td>
         </tr>
 }

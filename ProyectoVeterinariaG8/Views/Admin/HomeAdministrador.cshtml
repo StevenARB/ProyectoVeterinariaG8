@@ -1,27 +1,54 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home Admin";
 }
-<h2>Administracion</h2>
+<h2>Administración</h2>
 <hr />
 <div>
-    <h4>Control de Usuarios</h4>
-
-    <a class=" btn btn-info text-white" asp-area="" asp-controller="Admin" asp-action="CreateUser">Crear un Usuario</a>
+    <h4>Usuarios</h4>
+    <a class="btn btn-primary" asp-area="" asp-controller="Admin" asp-action="CreateUser">Crear Usuario</a>
 </div>
 <hr />
 
 <div class="row">
+    @if (TempData["UserPasswordUpdatedMessage"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["UserPasswordUpdatedMessage"]
+        </div>
+    }
+
+    @if (TempData["UserPasswordUpdatedMessageError"] != null)
+    {
+        <div class="alert alert-warning" role="alert">
+            @TempData["UserPasswordUpdatedMessageError"]
+        </div>
+    }
+
+    @if (TempData["UserUpdatedMessage"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["UserUpdatedMessage"]
+        </div>
+    }
+
+    @if (TempData["UserDeleted"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["UserDeleted"]
+        </div>
+    }
     @foreach (var usuarios in ViewBag._usuarios)
     {
         <div class="col-sm-4">
             <div class="card mb-3">
                 <div class="card-body">
-                    <h5 class="card-title"><strong>Nombre:  </strong> @usuarios.Nombre, @usuarios.PrimerApellido, @usuarios.SegundoApellido</h5>
-                    <p class="card-text"><strong>Correo: </strong> @usuarios.Email</p>
-                    <p class="card-text"><strong>Numero: </strong> @usuarios.PhoneNumber</p>
-                    <a href="@Url.Action("EditUser","Admin", new { id = usuarios.Id})" class="btn btn-primary">Editar</a>
-                    <a href="@Url.Action("DeleteUser","Medicamentos", new { id = usuarios.Id})" class="btn btn-primary">Eliminar</a>
-                    <a href="@Url.Action("DetailsUser","Medicamentos", new { id = usuarios.Id})" class="btn btn-primary">Detalles</a>
+                    <h5 class="card-title"><strong>Nombre:  </strong> @usuarios.Nombre</h5>
+                    <p class="card-text"><strong>Primer Apellido: </strong> @usuarios.PrimerApellido</p>
+                    <p class="card-text"><strong>Segundo Apellido: </strong> @usuarios.SegundoApellido</p>
+                    <p class="card-text"><strong>Email: </strong> @usuarios.Email</p>
+                    <a href="@Url.Action("DetailsUser","Admin", new { id = usuarios.Id})" class="btn btn-outline-primary">Detalles</a>
+                    <a href="@Url.Action("EditUser","Admin", new { id = usuarios.Id})" class="btn btn-outline-primary">Editar</a>
+                    <a href="@Url.Action("DeleteUser","Admin", new { id = usuarios.Id})" class="btn btn-outline-primary">Eliminar</a>
                 </div>
             </div>
         </div>
@@ -31,9 +58,8 @@
 <hr />
 
 <div>
-    <h4>Control de tipos de mascotas</h4>
-
-    <a class=" btn btn-info text-white" asp-area="" asp-controller="TipoMascotas" asp-action="Create">Crear un tipo de Mascota</a>
+    <h4>Tipos de Mascotas</h4>
+    <a class="btn btn-primary" asp-area="" asp-controller="TipoMascotas" asp-action="Create">Crear Tipo</a>
 </div>
 
 <hr />
@@ -46,9 +72,9 @@
                 <div class="card-body">
                     <h5 class="card-title"><strong>Tipo:  </strong> @tiposMascotas.Descripcion</h5>
                     <p class="card-text"><strong>ID: </strong> @tiposMascotas.TipoId</p>
-                    <a href="@Url.Action("Edit","TipoMascotas", new { id = tiposMascotas.TipoId})" class="btn btn-primary">Editar</a>
-                    <a href="@Url.Action("Delete","TipoMascotas", new { id = tiposMascotas.TipoId})" class="btn btn-primary">Eliminar</a>
-                    <a href="@Url.Action("Details","TipoMascotas", new { id = tiposMascotas.TipoId})" class="btn btn-primary">Detalles</a>
+                    <a href="@Url.Action("Details","TipoMascotas", new { id = tiposMascotas.TipoId})" class="btn btn-outline-primary">Detalles</a>
+                    <a href="@Url.Action("Edit","TipoMascotas", new { id = tiposMascotas.TipoId})" class="btn btn-outline-primary">Editar</a>
+                    <a href="@Url.Action("Delete","TipoMascotas", new { id = tiposMascotas.TipoId})" class="btn btn-outline-primary">Eliminar</a>
                 </div>
             </div>
         </div>
@@ -58,9 +84,8 @@
 <hr />
 
 <div>
-    <h4>Control de Razas</h4>
-
-    <a class=" btn btn-info text-white" asp-area="" asp-controller="RazaMascotas" asp-action="Create">Crear una raza</a>
+    <h4>Razas de Mascotas</h4>
+    <a class="btn btn-primary" asp-area="" asp-controller="RazaMascotas" asp-action="Create">Crear Raza</a>
 </div>
 
 <hr />
@@ -74,15 +99,31 @@
                     <h5 class="card-title"><strong>Raza:  </strong> @razasMascotas.Descripcion</h5>
                     <p class="card-text"><strong>Tipo: </strong> @razasMascotas.TipoMascota.Descripcion</p>
                     <p class="card-text"><strong>ID: </strong> @razasMascotas.RazaId</p>
-                    <a href="@Url.Action("Edit","RazaMascotas", new { idM = razasMascotas.RazaId})" class="btn btn-primary">Editar</a>
-                    <a href="@Url.Action("Delete","RazaMascotas", new { idM = razasMascotas.RazaId})" class="btn btn-primary">Eliminar</a>
-                    <a href="@Url.Action("Details","RazaMascotas", new { idM = razasMascotas.RazaId})" class="btn btn-primary">Detalles</a>
-
+                    <a href="@Url.Action("Details","RazaMascotas", new { id = razasMascotas.RazaId})" class="btn btn-outline-primary">Detalles</a>
+                    <a href="@Url.Action("Edit","RazaMascotas", new { id = razasMascotas.RazaId})" class="btn btn-outline-primary">Editar</a>
+                    <a href="@Url.Action("Delete","RazaMascotas", new { id = razasMascotas.RazaId})" class="btn btn-outline-primary">Eliminar</a>
                 </div>
             </div>
         </div>
     }
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        function ocultarAlertas() {
+            setTimeout(function () {
+                var alertas = document.querySelectorAll('.alert');
+                alertas.forEach(function (alerta) {
+                    alerta.style.display = 'none';
+                });
+            }, 5000);
+        }
+        ocultarAlertas();
+    </script>
+}
 
 
 

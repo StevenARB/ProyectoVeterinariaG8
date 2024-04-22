@@ -1,13 +1,13 @@
-﻿@model ProyectoVeterinariaG8.DAL.Cita
+﻿@using System.Security.Claims
+@model ProyectoVeterinariaG8.DAL.Cita
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Detalles sobre la Cita</h1>
 
 <div>
-    <h4>Cita</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -16,17 +16,36 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.FechayHora)
         </dd>
+        @{
+            var identidad = User.Identity as ClaimsIdentity;
+            var roles = identidad.Claims.Where(c => c.Type == ClaimTypes.Role).ToList();
+            if (roles.Select(r => r.Value).Contains("Administrador"))
+            {
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.PrimerVeterinarioId)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.PrimerVeterinarioId)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.SegundoVeterinarioId)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.SegundoVeterinarioId)
+                </dd>
+            }
+        }
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.PrimerVeterinarioId)
+            @Html.DisplayNameFor(model => model.PrimerVeterinario)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PrimerVeterinarioId)
+            @Html.DisplayFor(model => model.PrimerVeterinario.Nombre)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.SegundoVeterinarioId)
+            @Html.DisplayNameFor(model => model.SegundoVeterinario)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.SegundoVeterinarioId)
+            @Html.DisplayFor(model => model.SegundoVeterinario.Nombre)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.DescripcionCita)
@@ -59,8 +78,9 @@
             @Html.DisplayFor(model => model.EstadoCita.DescripcionCita)
         </dd>
     </dl>
+    <hr />
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.CitaId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.CitaId" class="btn btn-success">Editar</a> |
+    <a asp-action="Index" class="btn btn-secondary">Volver</a>
 </div>

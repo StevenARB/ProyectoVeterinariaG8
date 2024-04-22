@@ -42,3 +42,39 @@ INSERT INTO [dbo].[EstadosMascotas]
      VALUES
            ('Inactivo')
 GO
+
+INSERT INTO [dbo].[EstadosUsuario]
+           ([Descripcion])
+     VALUES
+           ('Activo')
+GO
+
+INSERT INTO [dbo].[EstadosUsuario]
+           ([Descripcion])
+     VALUES
+           ('Inactivo')
+GO
+
+INSERT INTO [dbo].[EstadosCita]
+           ([DescripcionCita])
+     VALUES
+           ('Agendada')
+GO
+
+INSERT INTO [dbo].[EstadosCita]
+           ([DescripcionCita])
+     VALUES
+           ('Cancelada')
+GO
+
+INSERT INTO [dbo].[EstadosCita]
+           ([DescripcionCita])
+     VALUES
+           ('En Curso')
+GO
+
+INSERT INTO [dbo].[EstadosCita]
+           ([DescripcionCita])
+     VALUES
+           ('Finalizada')
+GO

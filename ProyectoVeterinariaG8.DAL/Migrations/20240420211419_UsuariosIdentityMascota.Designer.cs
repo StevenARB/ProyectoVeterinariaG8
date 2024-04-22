@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProyectoVeterinariaG8.DAL;
 
@@ -11,9 +12,11 @@ using ProyectoVeterinariaG8.DAL;
 namespace ProyectoVeterinariaG8.DAL.Migrations
 {
     [DbContext(typeof(VeterinariaContext))]
-    partial class VeterinariaContextModelSnapshot : ModelSnapshot
+    [Migration("20240420211419_UsuariosIdentityMascota")]
+    partial class UsuariosIdentityMascota
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -127,13 +130,11 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
                     b.Property<int>("MedicamentoId")
                         .HasColumnType("int");
 
-                    b.Property<string>("PrimerVeterinarioId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("PrimerVeterinarioId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("SegundoVeterinarioId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("SegundoVeterinarioId")
+                        .HasColumnType("int");
 
                     b.HasKey("CitaId");
 
@@ -240,15 +241,22 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
                     b.Property<int>("TipoId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UsuarioCreacionId")
-                        .IsRequired()
+                    b.Property<int>("UsuarioCreacionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UsuarioCreacionId1")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("UsuarioModificacionId")
+                    b.Property<int?>("UsuarioModificacionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UsuarioModificacionId1")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("UsuarioPropietarioId")
-                        .IsRequired()
+                    b.Property<int>("UsuarioPropietarioId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UsuarioPropietarioId1")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("MascotaId");
@@ -259,11 +267,11 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
 
                     b.HasIndex("TipoId");
 
-                    b.HasIndex("UsuarioCreacionId");
+                    b.HasIndex("UsuarioCreacionId1");
 
-                    b.HasIndex("UsuarioModificacionId");
+                    b.HasIndex("UsuarioModificacionId1");
 
-                    b.HasIndex("UsuarioPropietarioId");
+                    b.HasIndex("UsuarioPropietarioId1");
 
                     b.ToTable("Mascotas");
                 });
@@ -496,13 +504,13 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ProyectoVeterinariaG8.DAL.ApplicationUser", "PrimerVeterinario")
+                    b.HasOne("ProyectoVeterinariaG8.DAL.Usuario", "PrimerVeterinario")
                         .WithMany("Veterinarios1")
                         .HasForeignKey("PrimerVeterinarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ProyectoVeterinariaG8.DAL.ApplicationUser", "SegundoVeterinario")
+                    b.HasOne("ProyectoVeterinariaG8.DAL.Usuario", "SegundoVeterinario")
                         .WithMany("Veterinarios2")
                         .HasForeignKey("SegundoVeterinarioId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -541,19 +549,15 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
 
                     b.HasOne("ProyectoVeterinariaG8.DAL.ApplicationUser", "UsuarioCreacion")
                         .WithMany("MascotasCreadas")
-                        .HasForeignKey("UsuarioCreacionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsuarioCreacionId1");
 
                     b.HasOne("ProyectoVeterinariaG8.DAL.ApplicationUser", "UsuarioModificacion")
                         .WithMany("MascotasModificadas")
-                        .HasForeignKey("UsuarioModificacionId");
+                        .HasForeignKey("UsuarioModificacionId1");
 
                     b.HasOne("ProyectoVeterinariaG8.DAL.ApplicationUser", "UsuarioPropietario")
                         .WithMany("Mascotas")
-                        .HasForeignKey("UsuarioPropietarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsuarioPropietarioId1");
 
                     b.Navigation("EstadoMascota");
 
@@ -638,10 +642,6 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
                     b.Navigation("MascotasCreadas");
 
                     b.Navigation("MascotasModificadas");
-
-                    b.Navigation("Veterinarios1");
-
-                    b.Navigation("Veterinarios2");
                 });
 
             modelBuilder.Entity("ProyectoVeterinariaG8.DAL.EstadoMascota", b =>
@@ -675,6 +675,13 @@ namespace ProyectoVeterinariaG8.DAL.Migrations
                     b.Navigation("Mascotas");
 
                     b.Navigation("RazasMascota");
+                });
+
+            modelBuilder.Entity("ProyectoVeterinariaG8.DAL.Usuario", b =>
+                {
+                    b.Navigation("Veterinarios1");
+
+                    b.Navigation("Veterinarios2");
                 });
 #pragma warning restore 612, 618
         }

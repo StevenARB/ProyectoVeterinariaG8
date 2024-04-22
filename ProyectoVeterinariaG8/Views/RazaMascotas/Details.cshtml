@@ -4,10 +4,9 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h2>Detalles de la raza de la Mascota</h2>
 
 <div>
-    <h4>RazaMascota</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -23,8 +22,9 @@
             @Html.DisplayFor(model => model.TipoMascota.Descripcion)
         </dd>
     </dl>
+    <hr />
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.RazaId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.RazaId" class="btn btn-primary">Editar</a> |
+    <a asp-action="Index" class="btn btn-secondary">Volver</a>
 </div>

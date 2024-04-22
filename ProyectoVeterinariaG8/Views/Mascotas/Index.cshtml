@@ -1,7 +1,8 @@
-﻿@model IEnumerable<ProyectoVeterinariaG8.DAL.Mascota>
+﻿@using System.Security.Claims
+@model IEnumerable<ProyectoVeterinariaG8.DAL.Mascota>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Mascotas";
 }
 
 <h1>Mascotas</h1>
@@ -11,8 +12,11 @@
 <div class="d-flex flex-wrap justify-content-between">
     <a class="btn btn-primary my-3" asp-action="Create">Crear Mascota</a>
     <div>
-        <a class="btn btn-outline-dark my-3" asp-controller="TipoMascotas" asp-action="Index">Tipos</a>
-        <a class="btn btn-outline-dark my-3" asp-controller="RazaMascotas" asp-action="Index">Razas</a>
+        @{
+            var identidad = User.Identity as ClaimsIdentity;
+            var roles = identidad.Claims.Where(c => c.Type == ClaimTypes.Role).ToList();
+            var nombresRoles = roles.Select(r => r.Value);
+        }
         <a class="btn btn-outline-dark my-3" asp-controller="MascotasPadecimientos" asp-action="Index">Padecimientos</a>
         <a class="btn btn-outline-dark my-3" asp-controller="MascotasVacunas" asp-action="Index">Vacunas</a>
         <a class="btn btn-outline-dark my-3" asp-controller="MascotasImagenes" asp-action="Index">Imágenes</a>
@@ -46,9 +50,14 @@
             <th>
                 @Html.DisplayNameFor(model => model.EstadoId)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UsuarioPropietarioId)
-            </th>
+            @{
+                if (nombresRoles.Contains("Veterinario") || nombresRoles.Contains("Administrador"))
+                {
+                    <th>
+                        @Html.DisplayNameFor(model => model.UsuarioPropietarioId)
+                    </th>
+                }
+            }
             <th></th>
         </tr>
     </thead>
@@ -79,13 +88,18 @@
             <td>
                 @Html.DisplayFor(modelItem => item.EstadoMascota.Descripcion)
             </td>
+                @{
+                    if (nombresRoles.Contains("Veterinario") || nombresRoles.Contains("Administrador"))
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UsuarioPropietarioId)
+                        </td>
+                    }
+                }
             <td>
-                @Html.DisplayFor(modelItem => item.UsuarioPropietarioId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MascotaId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MascotaId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MascotaId">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.MascotaId" class="btn btn-outline-primary btn-sm">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.MascotaId" class="btn btn-outline-secondary btn-sm">Detalles</a> |
+                    <a asp-action="Delete" asp-route-id="@item.MascotaId" class="btn btn-outline-danger btn-sm">Eliminar</a>
             </td>
         </tr>
 }

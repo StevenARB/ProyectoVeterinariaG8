@@ -1,0 +1,68 @@
+﻿@model ProyectoVeterinariaG8.DAL.ApplicationUser
+
+@{
+    ViewData["Title"] = "Eliminar Usuario";
+}
+
+<h1>Eliminar Usuario</h1>
+<br />
+
+<h3>Está seguro de eliminar este usuario?</h3>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PrimerApellido)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PrimerApellido)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SegundoApellido)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SegundoApellido)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaUltimaConexion)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FechaUltimaConexion)
+        </dd>
+        @{
+            var roles = ViewBag.Roles as List<string>;
+            if (roles != null && roles.Any())
+            {
+                <dt class="col-sm-2">Roles</dt>
+                <dd class="col-sm-10">
+                    @foreach (var role in roles)
+                    {
+                        @role
+
+                        <text> </text>
+                    }
+                </dd>
+            }
+        }
+    </dl>
+    <hr />
+    <br />
+    <form asp-action="DeleteUser">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+        <a asp-action="HomeAdministrador" class="btn btn-secondary">Volver</a>
+    </form>
+</div>
