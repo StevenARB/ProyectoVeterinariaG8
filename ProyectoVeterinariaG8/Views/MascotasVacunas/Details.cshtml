@@ -1,13 +1,12 @@
 ﻿@model ProyectoVeterinariaG8.DAL.MascotaVacuna
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles Vacuna";
 }
 
-<h1>Details</h1>
+<h1>Detalles Vacuna</h1>
 
 <div>
-    <h4>MascotaVacuna</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -37,6 +36,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.VacunaId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.VacunaId" class="btn btn-warning">Actualizar</a> |
+    <a asp-action="Index" class="btn btn-secondary">Volver</a>
 </div>

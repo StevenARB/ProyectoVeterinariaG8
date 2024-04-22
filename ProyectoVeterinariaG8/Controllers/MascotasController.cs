@@ -352,6 +352,8 @@ namespace ProyectoVeterinariaG8.Controllers
                 {
                     return NotFound();
                 }
+
+                return View(mascota);
             }
 
             return NotFound();
